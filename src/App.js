@@ -46,6 +46,10 @@ render() {
                     <Data1 />
                     <Data1 />
                 </div>
+                <div className="dashboard" >
+                    <Data1 />
+                    <Data1 />
+                </div>
           </div>
         </div>
       )
