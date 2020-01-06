@@ -37,7 +37,7 @@ class Data1 extends Component {
     // Define url, kdb params and http params
     const url = 'https://localhost:8090/executeQuery'
     const kdbParams = {
-      query: 'select [5] sym, price, size, side, time from trade',
+      query: 'select [-5] sym, price, size, side, time from trade',
       response: true,
       type: 'sync'
     }
@@ -59,7 +59,7 @@ class Data1 extends Component {
 
   // Ensure data is loaded
   componentDidMount() {
-    this.getData()
+    this.interval = setInterval( () => this.getData(), 1000)
   }
 
   // Render content
