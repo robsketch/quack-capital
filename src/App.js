@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Table from './Table'
 import Form from './Form'
 import Logo from './logo.png'
+import Data1 from './Data1'
 
 class App extends Component {
     state = {
@@ -37,8 +38,14 @@ render() {
             </div>
           </div>
           <div class="inner-container">
-            <Table characterData={characters} removeCharacter={this.removeCharacter} />
-            <Form handleSubmit={this.handleSubmit} />
+            <div className="dashboard" >
+                    <Data1 />
+                    <Data1 />
+                </div>
+                <div className="dashboard" >
+                    <Data1 />
+                    <Data1 />
+                </div>
           </div>
         </div>
       )
