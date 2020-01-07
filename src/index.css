@@ -1,7 +1,7 @@
 :root {
-  --cool-blue: #85BDBF;
+  --cool-blue: rgb(0, 126, 84);
   --ice: #F3F8F2;
-  --hillary: #3581B8;
+  --hillary: #91CB3E;
   --trump: #FCB07E;
   --carpet: #DEE2D6;
 }
@@ -865,7 +865,7 @@ caption {
 .duck-title {
   display: inline;
   font-size: 3em;
-  color: var(--ice);
+  color: white;
 }
 
 .top-bar {
@@ -877,10 +877,17 @@ caption {
   border-color: var(--cool-blue)
 }
 
-.inner-container {
+.inner-container1 {
   margin: 0;
   padding: 0.5em 2em;
-  max-width: 70em;
+  max-width: 95em;
+  margin: auto;
+}
+
+.inner-container2 {
+  margin: 0;
+  padding: 0.5em 2em;
+  max-width: 100em;
   margin: auto;
 }
 
