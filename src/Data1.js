@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+
+
 const TableHeader = (props) => {
   const header = props.headers.map((h,i) => { return <th key={i}>{h}</th> })
   return <thead><tr>{header}</tr></thead>
@@ -12,16 +14,15 @@ const BasicTable = (props) => {
     return (
       <tr key={i}>
         <td>{row.sym}</td>
-        <td>{row.price}</td>
-        <td>{row.size}</td>        
-        <td>{row.side}</td> 
-        <td>{row.time}</td>
+        <td>{(row.price).toFixed(2)}</td> { /* max price */ }
+        <td>{(row.price1).toFixed(2)}</td> { /* min price */ }
       </tr>
     )
   })
 
   return <tbody>{rows}</tbody>
   }
+
 
 // Class for data handling
 class Data1 extends Component {
@@ -37,7 +38,7 @@ class Data1 extends Component {
     // Define url, kdb params and http params
     const url = 'https://localhost:8090/executeQuery'
     const kdbParams = {
-      query: 'select [-5] sym, price, size, side, time from trade',
+      query: '0!select max price, min price by sym from trade',
       response: true,
       type: 'sync'
     }

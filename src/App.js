@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import Logo from './logo.png'
 import Data1 from './Data1'
+import BarChart from './BarChart'
+import PriceChart from './PriceChart'
+//import SumBox from './SumBox'
 
 class App extends Component {
     state = {
@@ -30,24 +33,28 @@ render() {
     return (
         <div className="container">
           <div class="top-bar">
-            <div class="inner-container1">
+            <div class="inner-container">
               <img src={Logo} alt="duck" class="duck-logo" />
               <h1 class="duck-title">Quack Capital</h1>
             </div>
           </div>
-          <div class="inner-container2">
-            <div className="dashboard" >
+          <div class="inner-container">
+            <h2 > Price Charts </h2>
+          <div class="thin">
+            <BarChart />
+          </div>
+          <div class="thin">
+            <PriceChart />
+          </div>
+                    <h2 >Summary Statistics</h2>
                     <Data1 />
-                    <Data1 />
-                </div>
-                <div className="dashboard" >
-                    <Data1 />
-                    <Data1 />
+
+                    
                 </div>
           </div>
-        </div>
       )
 
   }
 }
 export default App
+
