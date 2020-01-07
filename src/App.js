@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import Table from './Table'
-import Form from './Form'
 import Logo from './logo.png'
 import Data1 from './Data1'
 
@@ -27,7 +25,7 @@ handleSubmit = character => {
 
 
 render() {
-    const { characters } = this.state
+    // const { characters } = this.state
   
     return (
         <div className="container">
