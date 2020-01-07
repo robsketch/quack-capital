@@ -30,12 +30,12 @@ render() {
     return (
         <div className="container">
           <div class="top-bar">
-            <div class="inner-container">
+            <div class="inner-container1">
               <img src={Logo} alt="duck" class="duck-logo" />
               <h1 class="duck-title">Quack Capital</h1>
             </div>
           </div>
-          <div class="inner-container">
+          <div class="inner-container2">
             <div className="dashboard" >
                     <Data1 />
                     <Data1 />
