@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 import Chart from 'react-apexcharts'
 
-class Chart1 extends Component {
+class BarChart extends Component {
     constructor(props) {
       super(props);
   
       this.state = {
         options: {
+          title: {
+            text: 'A Cool Bar Chart',
+            align: 'left'
+          },
           chart: {
             id: "basic-bar"
           },
@@ -41,4 +45,4 @@ class Chart1 extends Component {
     }
   }
   
-  export default Chart1;
+  export default BarChart;

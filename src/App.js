@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Logo from './logo.png'
 import Data1 from './Data1'
-import Chart1 from './Chart1'
-
+import BarChart from './BarChart'
+import PriceChart from './PriceChart'
+//import SumBox from './SumBox'
 
 class App extends Component {
     state = {
@@ -38,17 +39,19 @@ render() {
             </div>
           </div>
           <div class="inner-container">
-            <div className="dashboard" >
+            <h2 > Price Charts </h2>
+          <div class="thin">
+            <BarChart />
+          </div>
+          <div class="thin">
+            <PriceChart />
+          </div>
+                    <h2 >Summary Statistics</h2>
                     <Data1 />
-                    <Data1 />
-                </div>
-                <div className="dashboard" >
-                    <Data1 />
-                    <Data1 />
-                    <Chart1 />
+
+                    
                 </div>
           </div>
-        </div>
       )
 
   }

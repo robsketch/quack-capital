@@ -859,7 +859,7 @@ caption {
   display: inline;
   height: 2.3em;
   margin-right: 1em;
-  animation: rotation 20s infinite linear;
+  animation: rotation 5s infinite linear;
 }
 
 .duck-title {
@@ -886,4 +886,9 @@ caption {
 
 .container {
   background-color: var(--ice);
+}
+
+.thin {
+  width: 50%;
+  display: inline-table;
 }
