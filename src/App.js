@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Logo from './logo.png'
 import Data1 from './Data1'
+import Chart1 from './Chart1'
+
 
 class App extends Component {
     state = {
@@ -43,6 +45,7 @@ render() {
                 <div className="dashboard" >
                     <Data1 />
                     <Data1 />
+                    <Chart1 />
                 </div>
           </div>
         </div>
