@@ -24,7 +24,7 @@ handleSubmit = character => {
     this.setState({ characters: [...this.state.characters, character] })
   }
 
-{}
+
 
 render() {
     const { characters } = this.state
@@ -39,10 +39,6 @@ render() {
           </div>
           <div class="inner-container">
             <div className="dashboard" >
-                    <Data1 />
-                    <Data1 />
-                </div>
-                <div className="dashboard" >
                     <Data1 />
                     <Data1 />
                 </div>
