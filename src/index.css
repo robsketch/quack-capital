@@ -1,7 +1,7 @@
 :root {
-  --cool-blue: rgb(0, 126, 84);
+  --cool-blue: #85BDBF;
   --ice: #F3F8F2;
-  --hillary: #91CB3E;
+  --hillary: #3581B8;
   --trump: #FCB07E;
   --carpet: #DEE2D6;
 }
@@ -865,7 +865,7 @@ caption {
 .duck-title {
   display: inline;
   font-size: 3em;
-  color: white;
+  color: var(--ice);
 }
 
 .top-bar {

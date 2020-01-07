@@ -33,12 +33,12 @@ render() {
     return (
         <div className="container">
           <div class="top-bar">
-            <div class="inner-container">
+            <div class="inner-container1">
               <img src={Logo} alt="duck" class="duck-logo" />
               <h1 class="duck-title">Quack Capital</h1>
             </div>
           </div>
-          <div class="inner-container">
+          <div class="inner-container1">
             <h2 > Price Charts </h2>
           <div class="thin">
             <BarChart />
