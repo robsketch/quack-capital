@@ -31,7 +31,7 @@ render() {
     // const { characters } = this.state
   
     return (
-        <div className="container">
+      <div className="container">
           <div class="top-bar">
             <div class="inner-container1">
               <img src={Logo} alt="duck" class="duck-logo" />
@@ -40,18 +40,15 @@ render() {
           </div>
           <div class="inner-container1">
             <h2 > Price Charts </h2>
-          <div class="thin">
-            <BarChart />
+            <div class="thin">
+              <BarChart />
+            </div>
+            <div class="thin">
+              <PriceChart />
+            </div>
+              <Data1 />                    
           </div>
-          <div class="thin">
-            <PriceChart />
-          </div>
-                    <h2 >Daily Summary</h2>
-                    <Data1 />
-
-                    
-                </div>
-          </div>
+      </div>
       )
 
   }

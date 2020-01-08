@@ -7,21 +7,49 @@ const TableHeader = (props) => {
   return <thead><tr>{header}</tr></thead>
 }
 
+const SumHeader = (props) => {
+  const set = Object.keys(props.data).map((k,i) => {
+    let row = props.data[k]
+    var biggest = row.rnk; let maxtraded = '';
+    if (biggest == 0) { let maxtraded = row.sym};
+    return maxtraded;
+  })
+  return <h2>Daily Statistics, Current max traded sym = {
+    set.maxtraded
+    
+
+    
+  }</h2>
+  }
+
+
 // Parse query contents into table
 const BasicTable = (props) => {
   const rows = Object.keys(props.data).map((k,i) => {
     let row = props.data[k]
+    var tick = row.t;
+    var trend ='';
+    if (tick == 0) {
+      trend = 'flat';
+    } else if (tick == 1){
+      trend = 'up';
+    } else {
+      trend = 'down'
+    };
+    var biggest = row.rnk; var maxtraded = '';
+    if (biggest == 0) { maxtraded = row.sym};
     return (
-      <tr key={i}>
-        <td>{row.sym}</td>
-        <td>{(row.price).toFixed(2)}</td> { /* max price */ }
-        <td>{(row.price1).toFixed(2)}</td> { /* min price */ }
-        <td>{(row.t)}</td>
-        <td>{(row.size)}</td>
-      </tr>
+        <tr key={i}>
+          <td>{row.sym}</td>
+          <td>{(row.price).toFixed(2)}</td> { /* max price */ }
+          <td>{(row.price1).toFixed(2)}</td> { /* min price */ }
+          <td>{trend}</td>
+          <td>{(row.size)}</td>
+        </tr>
+        
     )
   })
-
+ // if (!Object.entries(this.state.data).length) { return <div>Loading table...</div> }
   return <tbody>{rows}</tbody>
   }
 
@@ -40,7 +68,7 @@ class Data1 extends Component {
     // Define url, kdb params and http params
     const url = 'https://localhost:8090/executeQuery'
     const kdbParams = {
-      query: 'update t:?[price>price1;-1;?[price=price1;0;1]] from select last price except last price, last price, sum size by sym from trade',
+      query: 'update rnk:til 10 from update t:?[price>price1;-1;?[price=price1;0;1]] from select last price except last price, last price, sum size by sym from trade',
       response: true,
       type: 'sync'
     }
@@ -73,12 +101,15 @@ class Data1 extends Component {
 
     const data = this.state.data
     const headers = ['SYM', 'PrevPx', 'CurPx', 'Trend', 'TotVol']
-
+    
     return(
-      <table>
-        <TableHeader headers={headers} />
-        <BasicTable data={data} />
-      </table>
+      <div>
+          <SumHeader data={data} />
+        <table>
+          <TableHeader headers={headers} />
+          <BasicTable data={data} />
+        </table>
+      </div>
     )
   }
 
