@@ -46,7 +46,7 @@ render() {
           <div class="thin">
             <PriceChart />
           </div>
-                    <h2 >Summary Statistics</h2>
+                    <h2 >Daily Summary</h2>
                     <Data1 />
 
                     
