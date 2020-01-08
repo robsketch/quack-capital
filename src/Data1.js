@@ -8,19 +8,14 @@ const TableHeader = (props) => {
 }
 
 const SumHeader = (props) => {
-  const set = Object.keys(props.data).map((k,i) => {
-    let row = props.data[k]
-    var biggest = row.rnk; let maxtraded = '';
-    if (biggest == 0) { let maxtraded = row.sym};
-    return maxtraded;
+  var maxtraded;
+  props.data.map(row => {
+    if (row.rnk === 0) {
+      maxtraded = row.sym
+    };
   })
-  return <h2>Daily Statistics, Current max traded sym = {
-    set.maxtraded
-    
-
-    
-  }</h2>
-  }
+  return <h2>Daily Statistics - Today's highest traded sym is {maxtraded}</h2>
+}
 
 
 // Parse query contents into table
@@ -36,8 +31,8 @@ const BasicTable = (props) => {
     } else {
       trend = 'down'
     };
-    var biggest = row.rnk; var maxtraded = '';
-    if (biggest == 0) { maxtraded = row.sym};
+    var biggest = row.rnk;
+    if (biggest == 0) { let maxtraded = row.sym};
     return (
         <tr key={i}>
           <td>{row.sym}</td>
@@ -68,7 +63,7 @@ class Data1 extends Component {
     // Define url, kdb params and http params
     const url = 'https://localhost:8090/executeQuery'
     const kdbParams = {
-      query: 'update rnk:til 10 from update t:?[price>price1;-1;?[price=price1;0;1]] from select last price except last price, last price, sum size by sym from trade',
+      query: 'update rnk:rank neg size from update t:?[price>price1;-1;?[price=price1;0;1]] from select last price except last price, last price, sum size by sym from trade',
       response: true,
       type: 'sync'
     }
