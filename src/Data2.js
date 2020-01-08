@@ -34,7 +34,7 @@ class Data2 extends Component {
     // Define url, kdb params and http params
     const url = 'https://localhost:8090/executeQuery'
     const kdbParams = {
-      query: 'select avg price by sym from trade',
+      query: 'select avg price by sym from trade where time.date=.z.d',
       response: true,
       type: 'sync'
     }
