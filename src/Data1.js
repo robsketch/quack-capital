@@ -64,7 +64,7 @@ class Data1 extends Component {
     // Define url, kdb params and http params
     const url = 'https://localhost:8090/executeQuery'
     const kdbParams = {
-      query: 'update rnk:rank neg size from update t:?[price>price1;-1;?[price=price1;0;1]] from select last price except last price, last price, sum size by sym from trade',
+      query: 'update rnk:rank neg size from update t:?[price>price1;-1;?[price=price1;0;1]] from (select last price except last price, last price, sum size by sym from trade where time.date=.z.d)',
       response: true,
       type: 'sync'
     }
