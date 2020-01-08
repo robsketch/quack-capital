@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowCircleUp, faArrowCircleDown, faMinusCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 const TableHeader = (props) => {
@@ -11,7 +12,7 @@ const SumHeader = (props) => {
   const set = Object.keys(props.data).map((k,i) => {
     let row = props.data[k]
     var biggest = row.rnk; let maxtraded = '';
-    if (biggest == 0) { let maxtraded = row.sym};
+    if (biggest === 0) { let maxtraded = row.sym};
     return maxtraded;
   })
   return <h2>Daily Statistics, Current max traded sym = {
@@ -29,15 +30,15 @@ const BasicTable = (props) => {
     let row = props.data[k]
     var tick = row.t;
     var trend ='';
-    if (tick == 0) {
-      trend = 'flat';
-    } else if (tick == 1){
-      trend = 'up';
+    if (tick === 0) {
+      trend = <FontAwesomeIcon icon={faMinusCircle} />;
+    } else if (tick === 1){
+      trend = <FontAwesomeIcon icon={faArrowCircleUp} color="green" />;
     } else {
-      trend = 'down'
+      trend = <FontAwesomeIcon icon={faArrowCircleDown} color="red" />
     };
     var biggest = row.rnk; var maxtraded = '';
-    if (biggest == 0) { maxtraded = row.sym};
+    if (biggest === 0) { maxtraded = row.sym};
     return (
         <tr key={i}>
           <td>{row.sym}</td>
