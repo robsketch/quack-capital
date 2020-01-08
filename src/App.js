@@ -3,6 +3,7 @@ import Logo from './logo.png'
 import Data1 from './Data1'
 import BarChart from './BarChart'
 import PriceChart from './PriceChart'
+import PriceChart1 from './PriceChart1'
 //import SumBox from './SumBox'
 
 class App extends Component {
@@ -44,7 +45,7 @@ render() {
               <BarChart />
             </div>
             <div class="thin">
-              <PriceChart />
+              <PriceChart1 />
             </div>
               <Data1 />                    
           </div>

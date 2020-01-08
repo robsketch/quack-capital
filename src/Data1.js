@@ -57,7 +57,7 @@ class Data1 extends Component {
     this.state = {
       data:{},
     }
-}
+  }
 
   // Fetch data from KDB instance
   async getData() {
