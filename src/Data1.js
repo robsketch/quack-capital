@@ -37,10 +37,12 @@ const BasicTable = (props) => {
     return (
       <tr key={i}>
         <td>{row.sym}</td>
-        <td>{(row.price).toFixed(2)}</td> { /* max price */}
         <td>{(row.price1).toFixed(2)}</td> { /* min price */}
         <td>{trend}</td>
         <td>{(row.size)}</td>
+        <td>{(row.Open).toFixed(2)}</td>
+        <td>{(row.High).toFixed(2)}</td>
+        <td>{(row.Low).toFixed(2)}</td>
       </tr>
 
     )
@@ -64,7 +66,7 @@ class Data1 extends Component {
     // Define url, kdb params and http params
     const url = 'https://localhost:8090/executeQuery'
     const kdbParams = {
-      query: 'update rnk:rank neg size from update t:?[price>price1;-1;?[price=price1;0;1]] from (select last price except last price, last price, sum size by sym from trade where time.date=.z.d)',
+      query: 'update rnk:rank neg size from update t:?[price>price1;-1;?[price=price1;0;1]] from (select Open:first price, High:max price, Low:min price, last price except last price, last price, sum size by sym from trade where time.date=.z.d)',
       response: true,
       type: 'sync'
     }
@@ -96,7 +98,7 @@ class Data1 extends Component {
     if (!Object.entries(this.state.data).length) { return <div>Loading table...</div> }
 
     const data = this.state.data
-    const headers = ['SYM', 'PrevPx', 'CurPx', 'Trend', 'TotVol']
+    const headers = ['SYM', 'CurPx', 'Trend', 'TotVol', 'Open', 'High', 'Low']
 
     return (
       <div>

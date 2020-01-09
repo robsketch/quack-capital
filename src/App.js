@@ -43,10 +43,11 @@ render() {
           </div>
           <div className="inner-container1">
             <h2 > Price Charts </h2>
-            <div class="thin">
+            {/* <div class="thin">
               <BarChart />
-            </div>
-            <div class="thin">
+            </div> */}
+            {/* <div class="thin"> */}
+            <div>
               <PriceChart2 />
             </div>
               <Data1 />                    

@@ -33,7 +33,7 @@ class PriceChart2 extends React.Component {
                     curve: 'straight'
                 },
                 title: {
-                    text: 'Product Trends by Month',
+                    text: 'Stock Price Running Average',
                     align: 'left'
                 },
                 grid: {
@@ -42,15 +42,30 @@ class PriceChart2 extends React.Component {
                         opacity: 0.5
                     },
                 },
+
+                yaxis: {
+                    labels: {
+                      formatter: function (val) {
+                        return (val).toFixed(0);
+                      },
+                    },
+                    title: {
+                      text: 'Price'
+                    },
+                  },
                 xaxis: {
                     type: 'datetime',
                     labels: {
                         formatter: function(val) {
-                            return new Date(val);
+                            let x = new Date(val)
+                            return x.getHours().toString() + ':00';
                             //return (val / 10000).toFixed(0);
-                        }
-                    }
-                }
+                        },
+                    },
+                    title: {
+                        text: 'Time'
+                    },
+                },
 
             },
 
@@ -62,7 +77,9 @@ class PriceChart2 extends React.Component {
         // Define url, kdb params and http params
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select avg price by (5 * 60000000000) xbar time,sym  from trade where(time.date=.z.D), sym=`GOOG',
+            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,avgs price by sym from select avg price by (5 * 60000000000) xbar time,sym  from trade where(time.date=.z.D), sym=`GOOG',
+            //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select avg price by (60000000000) xbar time,sym  from trade where(time.time>.z.T-`minute$100), sym=`GOOG',
+
             //query: 'select[10] time from trade',
             //query: 'select time, price by sym from 0!select avg price by (5 * 60000000000) xbar time, sym from trade where sym=`GOOG, ',
             //query: '0!select avg price by (5 * 60000000000) xbar time, sym from trade where sym=`GOOG',
@@ -107,12 +124,15 @@ class PriceChart2 extends React.Component {
                 type: 'line',
                 data: seriesData
             }]
+        
         })
     }
 
+
     // Ensure data is loaded
     componentDidMount() {
-        this.getData()
+        //this.getData()
+        this.interval = setInterval(() => this.getData(), 2000)
     }
 
 
