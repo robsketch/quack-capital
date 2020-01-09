@@ -2,7 +2,11 @@ import React from 'react'
 // import Chart from 'react-apexcharts'
 import ReactApexChart from 'react-apexcharts'
 
-
+function zip(a, b) {
+  var arr = [];
+  for (var key in a) arr.push([a[key], b[key]]);
+  return arr;
+}
 
 class PriceChart1 extends React.Component {
   constructor() {
@@ -53,7 +57,7 @@ class PriceChart1 extends React.Component {
     // Define url, kdb params and http params
     const url = 'https://localhost:8090/executeQuery'
     const kdbParams = {
-      query: 'select avgs price by sym from trade where (i<1000),(sym=`AAPL)',
+      query: 'select time,avgs price by sym from trade where (i<1000),(sym=`AAPL)',
       response: true,
       type: 'sync'
     }
@@ -69,12 +73,14 @@ class PriceChart1 extends React.Component {
     // Fetch data from server
     const response = await fetch(url, httpParams)
     const queryData = await response.json()
+    let seriesData = zip(queryData.result[0].time, queryData.result[0].price)
     console.log(queryData)
+    console.log(seriesData)
     this.setState({
       series: [{
         name: 'AAPL',
         type: 'line',
-        data: queryData.result[0].price
+        data: seriesData
       }]
     })
   }

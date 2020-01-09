@@ -4,7 +4,7 @@ import { faArrowCircleUp, faArrowCircleDown, faMinusCircle } from '@fortawesome/
 
 
 const TableHeader = (props) => {
-  const header = props.headers.map((h,i) => { return <th key={i}>{h}</th> })
+  const header = props.headers.map((h, i) => { return <th key={i}>{h}</th> })
   return <thead><tr>{header}</tr></thead>
 }
 
@@ -22,32 +22,32 @@ const SumHeader = (props) => {
 
 // Parse query contents into table
 const BasicTable = (props) => {
-  const rows = Object.keys(props.data).map((k,i) => {
+  const rows = Object.keys(props.data).map((k, i) => {
     let row = props.data[k]
     var tick = row.t;
-    var trend ='';
+    var trend = '';
     if (tick === 0) {
       trend = <FontAwesomeIcon icon={faMinusCircle} />;
-    } else if (tick === 1){
+    } else if (tick === 1) {
       trend = <FontAwesomeIcon icon={faArrowCircleUp} color="green" />;
     } else {
       trend = <FontAwesomeIcon icon={faArrowCircleDown} color="red" />
     };
 
     return (
-        <tr key={i}>
-          <td>{row.sym}</td>
-          <td>{(row.price).toFixed(2)}</td> { /* max price */ }
-          <td>{(row.price1).toFixed(2)}</td> { /* min price */ }
-          <td>{trend}</td>
-          <td>{(row.size)}</td>
-        </tr>
-        
+      <tr key={i}>
+        <td>{row.sym}</td>
+        <td>{(row.price).toFixed(2)}</td> { /* max price */}
+        <td>{(row.price1).toFixed(2)}</td> { /* min price */}
+        <td>{trend}</td>
+        <td>{(row.size)}</td>
+      </tr>
+
     )
   })
- // if (!Object.entries(this.state.data).length) { return <div>Loading table...</div> }
+  // if (!Object.entries(this.state.data).length) { return <div>Loading table...</div> }
   return <tbody>{rows}</tbody>
-  }
+}
 
 
 // Class for data handling
@@ -55,7 +55,7 @@ class Data1 extends Component {
   constructor() {
     super();
     this.state = {
-      data:{},
+      data: {},
     }
   }
 
@@ -70,7 +70,7 @@ class Data1 extends Component {
     }
     const httpParams = {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Basic '.concat(btoa('user:pass'))
       },
@@ -78,7 +78,7 @@ class Data1 extends Component {
     }
 
     // Fetch data from server
-    const response = await fetch(url,httpParams)
+    const response = await fetch(url, httpParams)
     const queryData = await response.json()
 
     this.setState({ data: queryData.result })
@@ -86,7 +86,7 @@ class Data1 extends Component {
 
   // Ensure data is loaded
   componentDidMount() {
-    this.interval = setInterval( () => this.getData(), 1000)
+    this.interval = setInterval(() => this.getData(), 1000)
   }
 
   // Render content
@@ -97,10 +97,10 @@ class Data1 extends Component {
 
     const data = this.state.data
     const headers = ['SYM', 'PrevPx', 'CurPx', 'Trend', 'TotVol']
-    
-    return(
+
+    return (
       <div>
-          <SumHeader data={data} />
+        <SumHeader data={data} />
         <table>
           <TableHeader headers={headers} />
           <BasicTable data={data} />
@@ -108,7 +108,6 @@ class Data1 extends Component {
       </div>
     )
   }
-
 }
 
 export default Data1;

@@ -4,6 +4,7 @@ import Data1 from './Data1'
 import BarChart from './BarChart'
 import PriceChart from './PriceChart'
 import PriceChart1 from './PriceChart1'
+import PriceChart2 from './PriceChart2'
 //import SumBox from './SumBox'
 
 class App extends Component {
@@ -30,6 +31,7 @@ handleSubmit = character => {
 
 render() {
     // const { characters } = this.state
+    //console.log(new Date("2020.01.09D15:10:13.563597000"))
   
     return (
       <div className="container">
@@ -45,7 +47,7 @@ render() {
               <BarChart />
             </div>
             <div class="thin">
-              <PriceChart1 />
+              <PriceChart2 />
             </div>
               <Data1 />                    
           </div>
