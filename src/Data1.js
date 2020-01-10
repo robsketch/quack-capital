@@ -22,8 +22,13 @@ const SumHeader = (props) => {
 
 // Parse query contents into table
 const BasicTable = (props) => {
+  console.log(props)
+  console.log(props.data)
+  console.log(props.dataHDB)
+  
   const rows = Object.keys(props.data).map((k, i) => {
     let row = props.data[k]
+    let HDB = props.dataHDB[k]
     var tick = row.t;
     var trend = '';
     if (tick === 0) {
@@ -33,13 +38,14 @@ const BasicTable = (props) => {
     } else {
       trend = <FontAwesomeIcon icon={faArrowCircleDown} color="red" />
     };
-
+    
     return (
       <tr key={i}>
         <td>{row.sym}</td>
         <td>{(row.price1).toFixed(2)}</td> { /* min price */}
         <td>{trend}</td>
         <td>{(row.size)}</td>
+        <td>{(HDB.Close).toFixed(2)}</td>
         <td>{(row.Open).toFixed(2)}</td>
         <td>{(row.High).toFixed(2)}</td>
         <td>{(row.Low).toFixed(2)}</td>
@@ -58,6 +64,7 @@ class Data1 extends Component {
     super();
     this.state = {
       data: {},
+      dataHDB: {},
     }
   }
 
@@ -78,6 +85,7 @@ class Data1 extends Component {
       },
       body: JSON.stringify(kdbParams),
     }
+    
 
     // Fetch data from server
     const response = await fetch(url, httpParams)
@@ -86,9 +94,38 @@ class Data1 extends Component {
     this.setState({ data: queryData.result })
   }
 
+
+  async getDataHDB() {
+    // Define url, kdb params and http params
+    const url = 'https://localhost:8090/executeQuery'
+    const kdbParams = {
+      query: '(select Close:last price by sym from trade where time.date = .z.D - 1)',
+      response: true,
+      type: 'sync'
+    }
+    const httpParams = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic '.concat(btoa('user:pass'))
+      },
+      body: JSON.stringify(kdbParams),
+    }
+    
+
+    // Fetch data from server
+    const response = await fetch(url, httpParams)
+    const queryData = await response.json()
+
+    this.setState({ dataHDB: queryData.result })
+  }
+
+
+
   // Ensure data is loaded
   componentDidMount() {
     this.interval = setInterval(() => this.getData(), 1000)
+    this.getDataHDB()
   }
 
   // Render content
@@ -98,14 +135,15 @@ class Data1 extends Component {
     if (!Object.entries(this.state.data).length) { return <div>Loading table...</div> }
 
     const data = this.state.data
-    const headers = ['SYM', 'CurPx', 'Trend', 'TotVol', 'Open', 'High', 'Low']
+    const dataHDB = this.state.dataHDB
+    const headers = ['Ticker', 'Price', 'Trend', 'Volume', 'PrevClose', 'Open', 'High', 'Low']
 
     return (
       <div>
         <SumHeader data={data} />
         <table>
           <TableHeader headers={headers} />
-          <BasicTable data={data} />
+          <BasicTable data={data} dataHDB={dataHDB}/>
         </table>
       </div>
     )

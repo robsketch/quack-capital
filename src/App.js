@@ -5,6 +5,7 @@ import BarChart from './BarChart'
 import PriceChart from './PriceChart'
 import PriceChart1 from './PriceChart1'
 import PriceChart2 from './PriceChart2'
+import Volatility from './Volatility'
 //import SumBox from './SumBox'
 
 class App extends Component {
@@ -49,6 +50,7 @@ render() {
             {/* <div class="thin"> */}
             <div>
               <PriceChart2 />
+              <Volatility />
             </div>
               <Data1 />                    
           </div>

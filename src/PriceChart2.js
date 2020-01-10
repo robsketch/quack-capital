@@ -46,7 +46,7 @@ class PriceChart2 extends React.Component {
                 yaxis: {
                     labels: {
                       formatter: function (val) {
-                        return (val).toFixed(0);
+                        return (val).toFixed(2);
                       },
                     },
                     title: {
@@ -71,13 +71,15 @@ class PriceChart2 extends React.Component {
 
 
         };
+        this.getData();
     }
 
     async getData() {
         // Define url, kdb params and http params
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,avgs price by sym from select avg price by (5 * 60000000000) xbar time,sym  from trade where(time.date=.z.D), sym=`GOOG',
+            //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,avgs price by sym from trade where(time.date=.z.D), sym=`AAPL',
+            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,avgs price by sym from select avg price by (5 * 60000000000) xbar time,sym  from trade where(time.date=.z.D), sym=`AAPL',
             //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select avg price by (60000000000) xbar time,sym  from trade where(time.time>.z.T-`minute$100), sym=`GOOG',
 
             //query: 'select[10] time from trade',
@@ -132,7 +134,7 @@ class PriceChart2 extends React.Component {
     // Ensure data is loaded
     componentDidMount() {
         //this.getData()
-        this.interval = setInterval(() => this.getData(), 2000)
+        this.interval = setInterval(() => this.getData(), 10000000)
     }
 
 
