@@ -85,7 +85,7 @@ class VolumeChart extends React.Component {
         // Define url, kdb params and http params
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
-            query: '{[x] key[x]!([]data:flip each value x)}select Volume:sum size by sym from trade where time.date=.z.D',
+            query: 'select Volume:sum size by sym from trade where time.date=.z.D',
             response: true,
             type: 'sync'
         }
@@ -111,7 +111,6 @@ class VolumeChart extends React.Component {
     componentDidMount() {
         this.interval = setInterval(() => this.getData(), 10000000)
     }
-
 
     render() {
         // if (!Object.keys(this.state.data).length) { return <div>Loading graph...</div> }
