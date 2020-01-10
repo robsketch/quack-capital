@@ -3,6 +3,9 @@ import Logo from './logo.png'
 import Data1 from './Data1'
 import BarChart from './BarChart'
 import PriceChart from './PriceChart'
+import PriceChart1 from './PriceChart1'
+import PriceChart2 from './PriceChart2'
+import Volatility from './Volatility'
 //import SumBox from './SumBox'
 
 class App extends Component {
@@ -29,6 +32,7 @@ handleSubmit = character => {
 
 render() {
     // const { characters } = this.state
+    //console.log(new Date("2020.01.09D15:10:13.563597000"))
   
     return (
       <div className="container">
@@ -40,11 +44,13 @@ render() {
           </div>
           <div className="inner-container1">
             <h2 > Price Charts </h2>
-            <div class="thin">
+            {/* <div class="thin">
               <BarChart />
-            </div>
-            <div class="thin">
-              <PriceChart />
+            </div> */}
+            {/* <div class="thin"> */}
+            <div>
+              <PriceChart2 />
+              <Volatility />
             </div>
               <Data1 />                    
           </div>
