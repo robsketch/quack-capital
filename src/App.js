@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import Logo from './logo.png'
+import LogoLeft from './logo-left.png'
+import LogoRight from './logo-right.png'
 import Data1 from './Data1'
 import BarChart from './BarChart'
 import PriceChart from './PriceChart'
 import PriceChart1 from './PriceChart1'
-import PriceChart2 from './PriceChart2'
+import MovingAverage from './MovingAverage'
 import Volatility from './Volatility'
+import PriceChartFinal from './PriceChartFinal'
 //import SumBox from './SumBox'
 
 class App extends Component {
@@ -38,8 +40,10 @@ render() {
       <div className="container">
           <div className="top-bar">
             <div className="inner-container1">
-              <img src={Logo} alt="duck" class="duck-logo" />
+              <img src={LogoLeft} alt="duck" class="duck-logo-left" />
               <h1 className="duck-title">Quack Capital</h1>
+              <img src={LogoRight} alt="duck" class="duck-logo-right" />
+
             </div>
           </div>
           <div className="inner-container1">
@@ -49,8 +53,9 @@ render() {
             </div> */}
             {/* <div class="thin"> */}
             <div>
-              <PriceChart2 />
+              <MovingAverage />
               <Volatility />
+              <PriceChartFinal />
             </div>
               <Data1 />                    
           </div>

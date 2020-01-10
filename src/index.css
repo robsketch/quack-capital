@@ -855,11 +855,18 @@ caption {
 
 
 
-.duck-logo {
+.duck-logo-left {
   display: inline;
   height: 2.3em;
   margin-right: 1em;
   animation: rotation 5s infinite linear;
+}
+
+.duck-logo-right {
+  display: inline;
+  height: 2.3em;
+  margin-left: 1em;
+  animation: rotation 5s infinite reverse linear;
 }
 
 .duck-title {

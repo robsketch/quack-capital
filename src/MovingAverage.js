@@ -8,7 +8,7 @@ function zip(a, b) {
     return arr;
 }
 
-class PriceChart2 extends React.Component {
+class MovingAverage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -100,9 +100,21 @@ class PriceChart2 extends React.Component {
             body: JSON.stringify(kdbParams),
         }
 
+
+        // Getting the dates in order
+        
+
         // Fetch data from server
         const response = await fetch(url, httpParams)
         const queryData = await response.json()
+
+        var dates = []
+        let rawDates = queryData.result[0].data.y[0]
+
+        for (let i = 0; i < rawDates.length; i++) {
+            dates.push(new Date(rawDates[i]))
+        }
+
         let seriesData = []
         for (let i = 0; i < queryData.result[0].data.y[0].length; i++) {
             let x = new Date('2020-01-09T' + queryData.result[0].data.y[0][i]);
@@ -111,15 +123,7 @@ class PriceChart2 extends React.Component {
                 queryData.result[0].data.y[1][i]
             ])
         }
-        console.log('data returned')
-        console.log(queryData)
-        console.log('array of times')
-        console.log(queryData.result[0].data.y[0])
-        //let seriesData = zip(queryData.result[0].time, queryData.result[0].price)
-        
-        console.log("This is the series data")
-        console.log(seriesData)
-        console.log("---------------")
+
         this.setState({
             series: [{
                 name: 'AAPL',
@@ -142,7 +146,6 @@ class PriceChart2 extends React.Component {
         // if (!Object.keys(this.state.data).length) { return <div>Loading graph...</div> }
         const data = this.state.series
         // const data = [107.4]
-        console.log(data)
 
         return (
             <div id="chart">
@@ -154,4 +157,4 @@ class PriceChart2 extends React.Component {
 
 //const domContainer = document.querySelector('#app');
 // ReactDOM.render(React.createElement(ApexChart), domContainer);
-export default PriceChart2
+export default MovingAverage

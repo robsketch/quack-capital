@@ -17,7 +17,7 @@ class Volatility extends React.Component {
                     height: 350,
                     type: 'line',
                     zoom: {
-                        enabled: false
+                        enabled: true
                     }
                 },
                 dataLabels: {
@@ -57,7 +57,7 @@ class Volatility extends React.Component {
         const kdbParams = {
             // Temporary static query
             // TODO: Fix this so that it can have more than one sym and variable number of days.
-            query: '{[x] key[x]!([]data:flip each value x)}select t, x by sym from select x: sqrt var price by t: time.date, sym from trade where time.date >= .z.D - 20',
+            query: '{[x] key[x]!([]data:flip each value x)}select t, x by sym from select x: sqrt var price by t: time.date, sym from trade where time.date >= .z.D - 30',
             //query: '{[x] key[x]!([]data:flip each value x)}select t, x by sym from select x: sqrt var price by t: time.date, sym from trade where time.date >= .z.D - 20',
             //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select avg price by (60000000000) xbar time,sym  from trade where(time.time>.z.T-`minute$100), sym=`GOOG',
 
@@ -82,7 +82,7 @@ class Volatility extends React.Component {
         // Fetch data from server
         const response = await fetch(url, httpParams)
         const queryData = await response.json()
-        console.log('data returned')
+        console.log('Volatility')
         console.log(queryData)
 
         // Make an array of the dates that will be plotted on the x-axis.
@@ -92,8 +92,6 @@ class Volatility extends React.Component {
         for (let i = 0; i < rawDates.length; i++) {
             dates.push(new Date(rawDates[i]))
         }
-        console.log('DATES')
-        console.log(dates)
 
         let seriesData = []
         var dataArray = queryData.result;
@@ -102,21 +100,7 @@ class Volatility extends React.Component {
                 name: dataArray[i].sym,
                 data: dataArray[i].data.y[1]
             })
-            // let dp= dataArray[i].data.y[1];
-            // let lineName = dataArray[i].sym;
-            // console.log(dp)
-            // console.log(lineName)
         }
-        console.log('LOOH HERE')
-        console.log(seriesData)
-        console.log('data returned')
-        console.log(queryData)
-        console.log('array of times')
-        console.log(queryData.result[0].data.y[0])
-
-        console.log("This is the series data")
-        console.log(seriesData)
-        console.log("---------------")
         this.setState({
             series: seriesData,
 
@@ -125,7 +109,7 @@ class Volatility extends React.Component {
                     height: 350,
                     type: 'line',
                     zoom: {
-                        enabled: false
+                        enabled: true
                     }
                 },
                 dataLabels: {
