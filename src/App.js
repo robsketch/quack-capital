@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import Logo from './logo.png'
 import Data1 from './Data1'
-import BarChart from './BarChart'
-import PriceChart from './PriceChart'
-import PriceChart1 from './PriceChart1'
 import PriceChart2 from './PriceChart2'
 import Volatility from './Volatility'
-//import SumBox from './SumBox'
+import VolumeChart from './VolumeChart'
 
 class App extends Component {
     state = {
@@ -51,6 +48,7 @@ render() {
             <div>
               <PriceChart2 />
               <Volatility />
+              <VolumeChart />
             </div>
               <Data1 />                    
           </div>
