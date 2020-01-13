@@ -93,7 +93,7 @@ class PriceChartFinal extends React.Component {
         // Define url, kdb params and http params
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:5 xbar time.minute from trade where (time.date=.z.D) | (time.date=.z.D-1)',
+            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:5 xbar time.minute from trade where (time.date=.z.D)',
             response: true,
             type: 'sync'
         }
