@@ -2,25 +2,16 @@ import React from 'react'
 // import Chart from 'react-apexcharts'
 import ReactApexChart from 'react-apexcharts'
 
-function zip(a, b) {
-    var arr = [];
-    for (var key in a) arr.push([a[key], b[key]]);
-    return arr;
-}
-
 class VolumeChart extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
 
-            series: [{
-                name: "Desktops",
-                data: []
-            }],
+            series: [],
             options: {
                 chart: {
-                    height: 390,
+                    height: 350,
                     type: 'radialBar',
                 },
                 plotOptions: {
@@ -45,7 +36,7 @@ class VolumeChart extends React.Component {
                     }
                 },
                 colors: ['#1ab7ea', '#0084ff', '#39539E', '#0077B5', '#1ab7ea', '#0084ff', '#39539E', '#0077B5', '#0084ff', '#39539E', '#0077B5'],
-                labels: ['AAPL', 'AIG', 'AMD', 'DELL', 'DELL', 'DOW', 'GOOG', 'HPQ', 'IBM', 'INTC', 'MSFT'],
+                labels: [],
                 legend: {
                     show: true,
                     floating: true,
@@ -103,8 +94,32 @@ class VolumeChart extends React.Component {
         const queryData = await response.json()
         console.log('data returned')
         console.log(queryData)
-        // let Vol = queryData.result[0].data.y[0]
-        this.setState({ data: queryData.result })
+        console.log(queryData.result)
+        let volumeSeries = []
+        let volumeLabels = []
+        let volumeScaled = []
+
+        for (let i = 0; i < queryData.result.length; i++) {
+            volumeSeries.push(queryData.result[i].Volume)
+            volumeLabels.push(queryData.result[i].sym)
+        }
+
+        let maxVolume = Math.max(...volumeSeries)
+
+        for (let i = 0; i < queryData.result.length; i++) {
+            volumeScaled.push(volumeSeries[i] / maxVolume)
+        }
+
+        console.log('-------------------')
+        console.log(volumeLabels)
+        console.log(volumeSeries)
+        console.log(volumeScaled)
+        console.log('-------------------')
+
+        this.setState({
+            series: volumeScaled,
+            labels: volumeLabels
+        })
     }
 
     // Ensure data is loaded
@@ -119,13 +134,11 @@ class VolumeChart extends React.Component {
 
         return (
             <div id="chart">
-                <ReactApexChart options={this.state.options} series={this.state.series} type="radialBar" height={350} />
+                <ReactApexChart options={this.state.options} series={this.state.series} labels={this.state.labels} type="radialBar" height={350} />
             </div>
         );
     }
 }
 
 
-//const domContainer = document.querySelector('#app');
-// ReactDOM.render(React.createElement(ApexChart), domContainer);
 export default VolumeChart
