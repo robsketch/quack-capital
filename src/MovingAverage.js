@@ -1,5 +1,4 @@
 import React from 'react'
-// import Chart from 'react-apexcharts'
 import ReactApexChart from 'react-apexcharts'
 
 function zip(a, b) {
@@ -82,16 +81,7 @@ class MovingAverage extends React.Component {
         // Define url, kdb params and http params
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
-            //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,avgs price by sym from trade where(time.date=.z.D), sym=`AAPL',
             query: '{[x] key[x]!([]data:flip each value x)}select `time$time,avgs price by sym from select avg price by (5 * 60000000000) xbar time,sym  from trade where(time.date=.z.D)',
-            //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select avg price by (60000000000) xbar time,sym  from trade where(time.time>.z.T-`minute$100), sym=`GOOG',
-
-            //query: 'select[10] time from trade',
-            //query: 'select time, price by sym from 0!select avg price by (5 * 60000000000) xbar time, sym from trade where sym=`GOOG, ',
-            //query: '0!select avg price by (5 * 60000000000) xbar time, sym from trade where sym=`GOOG',
-            //query: 'select minute,price by sym from select avg price by sym, 10 xbar time.minute from trade where (sym in `AAPL`GOOG)',
-            //query: 'select time,avgs price by sym from trade where (i<1000),(sym=`AAPL)',
-            // (5 * 60000000000) xbar a - how to xbar timestamps
             response: true,
             type: 'sync'
         }
@@ -125,17 +115,10 @@ class MovingAverage extends React.Component {
             dates.push(new Date(rawDates[i]))
         }
 
-        // console.log('dates')
-        // console.log(dates)
-
         // var seriesData = []
         var dates = []
         for (let i = 0; i < queryData.result[0].data.y[0].length; i++) {
             dates.push(new Date('2020-01-09T' + queryData.result[0].data.y[0][i]));
-            // seriesData.push([
-            //     x,
-            //     queryData.result[0].data.y[1][i]
-            // ])
         }
 
         let seriesData = []
@@ -147,15 +130,9 @@ class MovingAverage extends React.Component {
             seriesData.push({
                 name: queryData.result[i].sym,
                 type: 'line',
-                // data: [dataArray[i].data.y[0],dataArray[i].data.y[1]]
                 data: dataTest[0]
             })
         }
-
-
-        
-        console.log('datesma')
-        console.log(dates)
 
         this.setState({
             series: seriesData
@@ -166,16 +143,11 @@ class MovingAverage extends React.Component {
 
     // Ensure data is loaded
     componentDidMount() {
-        //this.getData()
         this.interval = setInterval(() => this.getData(), 10000000)
     }
 
 
     render() {
-        // if (!Object.keys(this.state.data).length) { return <div>Loading graph...</div> }
-        // const data = this.state.series
-        // const data = [107.4]
-
         return (
             <div id="chart">
                 <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={350} />
@@ -184,6 +156,4 @@ class MovingAverage extends React.Component {
     }
 }
 
-//const domContainer = document.querySelector('#app');
-// ReactDOM.render(React.createElement(ApexChart), domContainer);
 export default MovingAverage
