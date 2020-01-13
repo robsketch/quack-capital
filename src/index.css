@@ -885,15 +885,15 @@ caption {
 }
 
 .inner-container1 {
-  margin: 0;
-  padding: 0.5em 2em;
-  max-width: 95em;
+  display: inline-block;
+  padding: 0.5em 3em;
+  width: 50%;
   margin: auto;
 }
 
 .inner-container2 {
   margin: 0;
-  padding: 0.5em 2em;
+  padding: 0;
   max-width: 100em;
   margin: auto;
 }

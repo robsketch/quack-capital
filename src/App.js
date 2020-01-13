@@ -39,22 +39,21 @@ render() {
     return (
       <div className="container">
           <div className="top-bar">
-            <div className="inner-container1">
+            <div className="inner-container2">
               <img src={LogoLeft} alt="duck" class="duck-logo-left" />
               <h1 className="duck-title">Quack Capital</h1>
               <img src={LogoRight} alt="duck" class="duck-logo-right" />
 
             </div>
           </div>
-          <div className="inner-container1">
+          <div className="inner-container2">
             <h2 className="charts-title" > Price Charts </h2>
             {/* <div class="thin">
               <BarChart />
             </div> */}
             {/* <div class="thin"> */}
-            <div>
-              <MovingAverage />
-              <Volatility />
+            <div className="test">
+              <div className="inner-container1"><MovingAverage /></div><div className="inner-container1"><Volatility /></div>
               {/* <PriceChartFinal /> */}
             </div>
               <Data1 />                    
