@@ -13,7 +13,7 @@ class Volatility extends React.Component {
             }],
             options: {
                 chart: {
-                    height: 350,
+                    height: 1000,
                     type: 'line',
                     zoom: {
                         enabled: true
@@ -104,14 +104,16 @@ class Volatility extends React.Component {
 
             options: {
                 chart: {
-                    height: 350,
+                    height: 1000,
                     type: 'line',
                     zoom: {
                         type: 'x',
                         enabled: true,
                         autoScaleYaxis: true
-                    }
+                    },
                 },
+                colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
+
                 dataLabels: {
                     enabled: false
                 },
@@ -134,7 +136,7 @@ class Volatility extends React.Component {
                         formatter: function(val) {
                             if (val) {
                             let x = new Date(val)
-                            return x;
+                            return x.getFullYear().toString() + '-' + (x.getMonth()+1).toString() + '-' + x.getDate().toString();
                             }
                             //return (val / 10000).toFixed(0);
                         },
@@ -166,7 +168,7 @@ class Volatility extends React.Component {
 
 
             <div id="chart">
-                <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={350} />
+                <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={550} />
             </div>
 
 

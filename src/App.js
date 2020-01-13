@@ -7,6 +7,7 @@ import Data1 from './Data1'
 // import PriceChart1 from './PriceChart1'
 import MovingAverage from './MovingAverage'
 import Volatility from './Volatility'
+import PriceChartFinal from './PriceChartFinal'
 // import PriceChartFinal from './PriceChartFinal'
 //import SumBox from './SumBox'
 
@@ -46,14 +47,17 @@ render() {
 
             </div>
           </div>
-          <div className="inner-container2">
-            <h2 className="charts-title" > Price Charts </h2>
+          <div className="inner-container2">     
+          <h2 className="charts-title" > Price Charts </h2>
+
+          <div className="inner-container-top"><PriceChartFinal /></div>{/*<div className="inner-container1"><Volatility /></div>*/}
             {/* <div class="thin">
               <BarChart />
             </div> */}
             {/* <div class="thin"> */}
             <div className="test">
               <div className="inner-container1"><MovingAverage /></div><div className="inner-container1"><Volatility /></div>
+              
               {/* <PriceChartFinal /> */}
             </div>
               <Data1 />                    

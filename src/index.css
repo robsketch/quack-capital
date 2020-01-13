@@ -889,6 +889,7 @@ caption {
   padding: 0.5em 3em;
   width: 50%;
   margin: auto;
+  /* background-color: #1B213B; */
 }
 
 .inner-container2 {
@@ -896,6 +897,7 @@ caption {
   padding: 0;
   max-width: 100em;
   margin: auto;
+  /* background-color: #262D47; */
 }
 
 .container {
@@ -905,4 +907,10 @@ caption {
 .thin {
   width: 50%;
   display: inline-table;
+}
+
+.inner-container-top {
+
+  /* background-color: #1B213B; */
+
 }

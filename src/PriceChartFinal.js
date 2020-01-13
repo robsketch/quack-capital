@@ -93,16 +93,7 @@ class PriceChartFinal extends React.Component {
         // Define url, kdb params and http params
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
-            //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,avgs price by sym from trade where(time.date=.z.D), sym=`AAPL',
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:5 xbar time.minute from trade where (time.date=.z.D)',
-            //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select avg price by (60000000000) xbar time,sym  from trade where(time.time>.z.T-`minute$100), sym=`GOOG',
-
-            //query: 'select[10] time from trade',
-            //query: 'select time, price by sym from 0!select avg price by (5 * 60000000000) xbar time, sym from trade where sym=`GOOG, ',
-            //query: '0!select avg price by (5 * 60000000000) xbar time, sym from trade where sym=`GOOG',
-            //query: 'select minute,price by sym from select avg price by sym, 10 xbar time.minute from trade where (sym in `AAPL`GOOG)',
-            //query: 'select time,avgs price by sym from trade where (i<1000),(sym=`AAPL)',
-            // (5 * 60000000000) xbar a - how to xbar timestamps
+            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:5 xbar time.minute from trade where (time.date=.z.D) | (time.date=.z.D-1)',
             response: true,
             type: 'sync'
         }
@@ -123,23 +114,30 @@ class PriceChartFinal extends React.Component {
         const response = await fetch(url, httpParams)
         const queryData = await response.json()
 
-        var dates = []
         console.log('QUERY DATA')
         console.log(queryData)
-        let rawTimes = queryData.result[0].data.y[0]
-       
-        for (let i = 0; i < rawTimes.length; i++) {
-             dates.push(new Date(rawTimes[i]))
-         }
+
+        var dates = []
+        let rawDates = queryData.result[0].data.y[0]
+
+        console.log('rawDates')
+        console.log(rawDates)
+
+        for (let i = 0; i < rawDates.length; i++) {
+            dates.push(new Date('2020-01-09T' + rawDates[i]))
+        }
 
         let seriesData = []
-         for (let i = 0; i < queryData.result[0].data.y[0].length; i++) {
-             let x = queryData.result[0].data.y[0][i];
-             seriesData.push([
-                 x,
-                 queryData.result[0].data.y[1][i]
-             ])
-         }
+        for (let i = 0; i < queryData.result.length; i++) {
+
+            var dataTest = []
+            dataTest.push(zip(dates,queryData.result[i].data.y[1]))
+            seriesData.push({
+                name: queryData.result[i].sym,
+                type: 'line',
+                data: dataTest[0]
+            })
+        }
         console.log('SERIES DATA')
         console.log(seriesData)
 
@@ -147,16 +145,26 @@ class PriceChartFinal extends React.Component {
             series: seriesData,
 
             options: {
+                title: {
+                    text: 'Stock Price over Time by sym',
+                    align: 'left'
+                },
                 chart: {
+                    
                     id: 'chart2',
                     type: 'line',
-                    height: 230,
+                    height: 1230,
                     toolbar: {
                         autoSelected: 'pan',
                         show: false
+                    },
+                    zoom: {
+                        tyoe:'x',
+                        autoScaleYaxis: true
                     }
                 },
-                colors: ['#546E7A'],
+                colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
+
                 stroke: {
                     width: 3
                 },
@@ -171,6 +179,61 @@ class PriceChartFinal extends React.Component {
                 },
                 xaxis: {
                     type: 'datetime'
+                },
+                yaxis: {
+                    labels: {
+                        formatter: function (val) {
+                            if (val) {
+                          return (val).toFixed(2);
+                            }
+                        },
+                      },
+                }
+            },
+
+            seriesLine: seriesData,
+            optionsLine: {
+                chart: {
+                    id: 'chart1',
+                    height: 130,
+                    type: 'area',
+                    brush: {
+                        target: 'chart2',
+                        enabled: true
+                    },
+                    selection: {
+                        enabled: true,
+                        xaxis: {
+                            min: new Date('19 Jun 2017').getTime(),
+                            max: new Date('14 Aug 2017').getTime()
+                        }
+                    },
+                },
+                colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
+
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        opacityFrom: 0.91,
+                        opacityTo: 0.1,
+                    }
+                },
+                xaxis: {
+                    type: 'datetime',
+                    tooltip: {
+                        enabled: false
+                    }
+                    
+                },
+                yaxis: {
+                    tickAmount: 2,
+                    labels: {
+                        formatter: function (val) {
+                            if (val) {
+                          return (val).toFixed(2);
+                            }
+                        },
+                      },
                 }
             },
 
@@ -196,10 +259,10 @@ class PriceChartFinal extends React.Component {
 
             <div id="wrapper">
                 <div id="chart-line2">
-                    <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={230} />
+                    <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={530} />
                 </div>
                 <div id="chart-line">
-                    <ReactApexChart options={this.state.optionsLine} series={this.state.seriesLine} type="area" height={130} />
+                    <ReactApexChart options={this.state.optionsLine} series={this.state.seriesLine} type="area" height={200} />
                 </div>
             </div>
 

@@ -19,7 +19,7 @@ class MovingAverage extends React.Component {
             }],
             options: {
                 chart: {
-                    height: 350,
+                    height: 1000,
                     type: 'line',
                     zoom: {
                         enabled: true
@@ -37,7 +37,7 @@ class MovingAverage extends React.Component {
                 },
                 grid: {
                     row: {
-                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        // colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
                         opacity: 0.5
                     },
                 },
@@ -68,7 +68,13 @@ class MovingAverage extends React.Component {
                     title: {
                         text: 'Time'
                     },
+                    axisBorder:{
+                        // color: "#333"
+                    }
                 },
+                tooltip: {
+                    // theme: 'dark',
+                }
 
             },
 
@@ -135,7 +141,25 @@ class MovingAverage extends React.Component {
         }
 
         this.setState({
-            series: seriesData
+            series: seriesData,
+
+            options: {
+                chart: {
+                    // foreColor: '#fff',
+                    // foreColor: '#fff',
+                    height: 1000,
+                    type: 'line',
+                    zoom: {
+                        enabled: true
+                    }
+                },
+                colors:['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
+            },
+            grid: {
+
+                // borderColor: "#40475D",
+
+            },
         
         })
     }
@@ -150,7 +174,7 @@ class MovingAverage extends React.Component {
     render() {
         return (
             <div id="chart">
-                <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={350} />
+                <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={550} />
             </div>
         );
     }
