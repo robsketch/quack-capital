@@ -2,11 +2,11 @@ import React from 'react'
 // import Chart from 'react-apexcharts'
 import ReactApexChart from 'react-apexcharts'
 
-// function zip(a, b) {
-//     var arr = [];
-//     for (var key in a) arr.push([a[key], b[key]]);
-//     return arr;
-// }
+function zip(a, b) {
+    var arr = [];
+    for (var key in a) arr.push([a[key], b[key]]);
+    return arr;
+}
 
 class MovingAverage extends React.Component {
     constructor(props) {
@@ -83,7 +83,7 @@ class MovingAverage extends React.Component {
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
             //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,avgs price by sym from trade where(time.date=.z.D), sym=`AAPL',
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,avgs price by sym from select avg price by (5 * 60000000000) xbar time,sym  from trade where(time.date=.z.D), sym=`AAPL',
+            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,avgs price by sym from select avg price by (5 * 60000000000) xbar time,sym  from trade where(time.date=.z.D)',
             //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select avg price by (60000000000) xbar time,sym  from trade where(time.time>.z.T-`minute$100), sym=`GOOG',
 
             //query: 'select[10] time from trade',
@@ -112,31 +112,53 @@ class MovingAverage extends React.Component {
         const response = await fetch(url, httpParams)
         const queryData = await response.json()
 
+        console.log('queryData')
+        console.log(queryData)
+
         var dates = []
         let rawDates = queryData.result[0].data.y[0]
+
+        console.log('rawDates')
+        console.log(rawDates)
 
         for (let i = 0; i < rawDates.length; i++) {
             dates.push(new Date(rawDates[i]))
         }
 
-        let seriesData = []
+        // console.log('dates')
+        // console.log(dates)
+
+        // var seriesData = []
+        var dates = []
         for (let i = 0; i < queryData.result[0].data.y[0].length; i++) {
-            let x = new Date('2020-01-09T' + queryData.result[0].data.y[0][i]);
-            seriesData.push([
-                x,
-                queryData.result[0].data.y[1][i]
-            ])
+            dates.push(new Date('2020-01-09T' + queryData.result[0].data.y[0][i]));
+            // seriesData.push([
+            //     x,
+            //     queryData.result[0].data.y[1][i]
+            // ])
         }
+
+        let seriesData = []
+
+        for (let i = 0; i < queryData.result.length; i++) {
+
+            var dataTest = []
+            dataTest.push(zip(dates,queryData.result[i].data.y[1]))
+            seriesData.push({
+                name: queryData.result[i].sym,
+                type: 'line',
+                // data: [dataArray[i].data.y[0],dataArray[i].data.y[1]]
+                data: dataTest[0]
+            })
+        }
+
+
         
-        console.log('seriesData Moving Average')
-        console.log(seriesData)
+        console.log('datesma')
+        console.log(dates)
 
         this.setState({
-            series: [{
-                name: 'AAPL',
-                type: 'line',
-                data: seriesData
-            }]
+            series: seriesData
         
         })
     }

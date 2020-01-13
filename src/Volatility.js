@@ -129,23 +129,6 @@ class Volatility extends React.Component {
         
         }
 
-        // var seriesData2 = []
-        // for (let i = 0; i < seriesData.length; i++) {
-        //     // let date = new Date(seriesData[i].data[0])
-        //     // console.log('datessss')
-        //     // console.log(date)
-        //     seriesData2.push(zip(dates,seriesData[i].data[1]))
-        // }
-
-        
-
-        
-
-
-
-        // console.log('SeriesData2')
-        // console.log(seriesData2)
-
         this.setState({
             series: seriesData,
 
