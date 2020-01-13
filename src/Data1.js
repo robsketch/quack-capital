@@ -22,9 +22,7 @@ const SumHeader = (props) => {
 
 // Parse query contents into table
 const BasicTable = (props) => {
-  console.log(props)
-  console.log(props.data)
-  console.log(props.dataHDB)
+
   
   const rows = Object.keys(props.data).map((k, i) => {
     let row = props.data[k]
