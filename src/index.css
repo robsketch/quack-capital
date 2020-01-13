@@ -880,7 +880,7 @@ caption {
   margin: 0;
   background-color: var(--hillary);
   border-style: solid;
-  border-width: 0 0 0.4em 0;
+  border-width: 0 0 0.5em 0;
   border-color: var(--cool-blue)
 }
 
@@ -899,7 +899,7 @@ caption {
 }
 
 .container {
-  background-color: var(--ice);
+  background-color: var(--ice);;
 }
 
 .thin {

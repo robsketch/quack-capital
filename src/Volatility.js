@@ -89,18 +89,63 @@ class Volatility extends React.Component {
         var dates = []
         let rawDates = queryData.result[0].data.y[0]
 
+        console.log('rawDates')
+        console.log(rawDates)
+
         for (let i = 0; i < rawDates.length; i++) {
             dates.push(new Date(rawDates[i]))
         }
 
+        console.log('Dates')
+        console.log(dates)
+        
+        console.log("queryData")
+        console.log(queryData)
+
         let seriesData = []
         var dataArray = queryData.result;
         for (let i = 0; i < dataArray.length; i++) {
+
+            var dataTest = []
+            dataTest.push(zip(dates,dataArray[i].data.y[1]))
             seriesData.push({
                 name: dataArray[i].sym,
-                data: dataArray[i].data.y[1]
+                type: 'line',
+                // data: [dataArray[i].data.y[0],dataArray[i].data.y[1]]
+                data: dataTest[0]
             })
         }
+        console.log('DataTest')
+        console.log(dataTest)
+
+        console.log('SeriesData vol')
+        console.log(seriesData)
+
+        function zip(a, b) {
+        var arr = [];
+        for (var key in a) arr.push([a[key], b[key]]);
+        return arr;
+
+        
+        }
+
+        // var seriesData2 = []
+        // for (let i = 0; i < seriesData.length; i++) {
+        //     // let date = new Date(seriesData[i].data[0])
+        //     // console.log('datessss')
+        //     // console.log(date)
+        //     seriesData2.push(zip(dates,seriesData[i].data[1]))
+        // }
+
+        
+
+        
+
+
+
+        // console.log('SeriesData2')
+        // console.log(seriesData2)
+
         this.setState({
             series: seriesData,
 
@@ -109,7 +154,9 @@ class Volatility extends React.Component {
                     height: 350,
                     type: 'line',
                     zoom: {
-                        enabled: true
+                        type: 'x',
+                        enabled: true,
+                        autoScaleYaxis: true
                     }
                 },
                 dataLabels: {
@@ -129,14 +176,19 @@ class Volatility extends React.Component {
                     },
                 },
                 xaxis: {
-                    categories: dates,
+                    type: 'datetime',
                     labels: {
-                        formatter: function (val) {
+                        formatter: function(val) {
                             if (val) {
-                                return val.toDateString()
+                            let x = new Date(val)
+                            return x;
                             }
-                        }
-                    }
+                            //return (val / 10000).toFixed(0);
+                        },
+                    },
+                    title: {
+                        text: 'Time'
+                    },
                 },
                 yaxis: {
                     labels: {

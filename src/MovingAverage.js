@@ -2,11 +2,11 @@ import React from 'react'
 // import Chart from 'react-apexcharts'
 import ReactApexChart from 'react-apexcharts'
 
-function zip(a, b) {
-    var arr = [];
-    for (var key in a) arr.push([a[key], b[key]]);
-    return arr;
-}
+// function zip(a, b) {
+//     var arr = [];
+//     for (var key in a) arr.push([a[key], b[key]]);
+//     return arr;
+// }
 
 class MovingAverage extends React.Component {
     constructor(props) {
@@ -46,7 +46,9 @@ class MovingAverage extends React.Component {
                 yaxis: {
                     labels: {
                       formatter: function (val) {
+                          if (val) {
                         return (val).toFixed(2);
+                          }
                       },
                     },
                     title: {
@@ -57,8 +59,10 @@ class MovingAverage extends React.Component {
                     type: 'datetime',
                     labels: {
                         formatter: function(val) {
+                            if (val) {
                             let x = new Date(val)
                             return x.getHours().toString() + ':00';
+                            }
                             //return (val / 10000).toFixed(0);
                         },
                     },
@@ -123,6 +127,9 @@ class MovingAverage extends React.Component {
                 queryData.result[0].data.y[1][i]
             ])
         }
+        
+        console.log('seriesData Moving Average')
+        console.log(seriesData)
 
         this.setState({
             series: [{
@@ -144,7 +151,7 @@ class MovingAverage extends React.Component {
 
     render() {
         // if (!Object.keys(this.state.data).length) { return <div>Loading graph...</div> }
-        const data = this.state.series
+        // const data = this.state.series
         // const data = [107.4]
 
         return (
