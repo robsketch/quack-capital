@@ -1,5 +1,4 @@
 import React from 'react'
-// import Chart from 'react-apexcharts'
 import ReactApexChart from 'react-apexcharts'
 
 function zip(a, b) {
@@ -115,9 +114,7 @@ class PriceChartFinal extends React.Component {
 
 
         };
-        // this.getData();
         this.getData(); // fetch rdb data
-        // this.getData; // fetch hdb data
     }
 
 
@@ -170,36 +167,9 @@ class PriceChartFinal extends React.Component {
         for (let i = 0; i < queryData2.result.length; i++) {
             queryData.result[i].data.y[0] = queryData2.result[i].data.y[0].concat(queryData.result[i].data.y[0])
             queryData.result[i].data.y[1] = queryData2.result[i].data.y[1].concat(queryData.result[i].data.y[1])
-            // testData[1].push(queryData.result[i].data.y[1].concat(queryData2.result[i].data.y[1]))
         }
         console.log('ConcatTest')
         console.log(queryData)
-
-        // var testData2 = []
-
-        // for (let i = 0; i < queryData.result.length; i++) {
-        //     testData2.push(queryData.result[i].data.y[1].concat(queryData2.result[i].data.y[1]))
-        //     // testData[1].push(queryData.result[i].data.y[1].concat(queryData2.result[i].data.y[1]))
-        // }
-
-        
-        // console.log('concat')
-        // console.log(testData2)
-
-        // var finalData = [testData,testData2]
-        // console.log('concat2')
-        // console.log(finalData)
-
-
-        // Getting the dates in order
-
-
-        // Fetch data from server
-        // const response = await fetch(url, httpParams)
-        // const queryData = await response.json()
-
-        // console.log('QUERY DATA')
-        // console.log(queryData)
 
         var dates = []
         let rawDates = queryData.result[0].data.y[0]
@@ -242,74 +212,10 @@ class PriceChartFinal extends React.Component {
         )
     }
 
-    // async getDataNew(rdb) {
-    //     // Define url, kdb params and http params
-    //     const url = 'https://localhost:8090/executeQuery'
-    
-    //     // The query is slightly different based on whether you are currently queryinig the rdb or hdb.
-    //     if (rdb) {
-    //         this.query = '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:5 xbar time.minute from trade where (time.date=.z.D)'
-            
-    //     } else {
-    //         this.query = '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:5 xbar time.minute from trade where (time.date>.z.D-3)'
-    //     }
-    
-    //     const kdbParams = {
-    //         query: this.query,
-    //         response: true,
-    //         type: 'sync'
-    //     }
-    
-    //     const httpParams = {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': 'Basic '.concat(btoa('user:pass'))
-    //         },
-    //         body: JSON.stringify(kdbParams),
-    //     }
-    
-    //     // Fetch data from server
-    //     const response = await fetch(url, httpParams)
-    //     const queryData = await response.json()
-    
-    //     console.log('QUERY DATA')
-    //     console.log(queryData)
-    
-    //     var dates = []
-    //     let rawDates = queryData.result[0].data.y[0]
-    
-    //     console.log('rawDates')
-    //     console.log(rawDates)
-    
-    //     for (let i = 0; i < rawDates.length; i++) {
-    //         // TODO: Fix this date so that it is not hard coded. Get the current date.
-    //         dates.push(new Date('2020-01-09T' + rawDates[i])) // remove jan 9th
-    //     }
-    
-    //     let seriesData = []
-    //     for (let i = 0; i < queryData.result.length; i++) {
-    //         var dataTest = []
-    //         dataTest.push(zip(dates, queryData.result[i].data.y[1]))
-    //         seriesData.push({
-    //             name: queryData.result[i].sym,
-    //             type: 'line',
-    //             data: dataTest[0]
-    //         })
-    //     }
-    //     console.log('SERIES DATA')
-    //     console.log(seriesData)
-    
-    //     this.setState({
-    //         series: seriesData,
-    //         seriesLine: seriesData
-    //     })
-    // }
 
 
     // Ensure data is loaded
     componentDidMount() {
-        //this.getData()
         this.interval = setInterval(() => this.getData(), 10000000)
     }
 
@@ -334,28 +240,3 @@ class PriceChartFinal extends React.Component {
 }
 
 export default PriceChartFinal
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function getData(rdb) {
-//     if (rdb) {
-//         query = 
-//     }
-// }
