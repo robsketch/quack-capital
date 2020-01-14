@@ -124,7 +124,7 @@ class PriceChartFinal extends React.Component {
         console.log(rawDates)
 
         for (let i = 0; i < rawDates.length; i++) {
-            dates.push(new Date('2020-01-09T' + rawDates[i]))
+            dates.push(new Date('2020-01-09T' + rawDates[i])) // remove jan 9th
         }
 
         let seriesData = []
@@ -204,7 +204,7 @@ class PriceChartFinal extends React.Component {
                     selection: {
                         enabled: true,
                         xaxis: {
-                            min: new Date('19 Jun 2017').getTime(),
+                            min: new Date('19 Jun 2017').getTime(), //get current date
                             max: new Date('14 Aug 2017').getTime()
                         }
                     },

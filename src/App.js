@@ -2,11 +2,6 @@ import React, { Component } from 'react'
 import LogoLeft from './logo-left.png'
 import LogoRight from './logo-right.png'
 import Data1 from './Data1'
-<<<<<<< HEAD
-import BarChart from './BarChart'
-import PriceChart from './PriceChart'
-import PriceChart1 from './PriceChart1'
-=======
 // import BarChart from './BarChart'
 // import PriceChart from './PriceChart'
 // import PriceChart1 from './PriceChart1'
@@ -14,7 +9,6 @@ import MovingAverage from './MovingAverage'
 import Volatility from './Volatility'
 import PriceChartFinal from './PriceChartFinal'
 // import PriceChartFinal from './PriceChartFinal'
->>>>>>> e0902772595a6b5fa9c7f0d18c9908738591a862
 //import SumBox from './SumBox'
 
 class App extends Component {
@@ -59,18 +53,12 @@ render() {
           <div className="inner-container-top"><PriceChartFinal /></div>{/*<div className="inner-container1"><Volatility /></div>*/}
             {/* <div class="thin">
               <BarChart />
-<<<<<<< HEAD
-            </div>
-            <div class="thin">
-              <PriceChart1 />
-=======
             </div> */}
             {/* <div class="thin"> */}
             <div className="test">
               <div className="inner-container1"><MovingAverage /></div><div className="inner-container1"><Volatility /></div>
               
               {/* <PriceChartFinal /> */}
->>>>>>> e0902772595a6b5fa9c7f0d18c9908738591a862
             </div>
               <Data1 />                    
           </div>
