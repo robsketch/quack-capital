@@ -160,7 +160,8 @@ class PriceChartFinal extends React.Component {
                     },
                     zoom: {
                         tyoe:'x',
-                        autoScaleYaxis: true
+                        autoScaleYaxis: true,
+                        enabled: true
                     }
                 },
                 colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
