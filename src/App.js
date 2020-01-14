@@ -44,7 +44,7 @@ render() {
               <img src={LogoLeft} alt="duck" class="duck-logo-left" />
               <h1 className="duck-title">Quack Capital</h1>
               <img src={LogoRight} alt="duck" class="duck-logo-right" />
-
+              <h1 className="duck-title"> </h1>
             </div>
           </div>
           <div className="inner-container2">     

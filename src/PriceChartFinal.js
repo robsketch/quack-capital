@@ -80,8 +80,8 @@ class PriceChartFinal extends React.Component {
                     selection: {
                         enabled: true,
                         xaxis: {
-                            min: new Date('12 Jan 2020').getTime(), //get current date
-                            max: new Date('13 Jan 2020').getTime()
+                            min: new Date('11 Jan 2020').getTime(), //get current date
+                            max: new Date('14 Jan 2020').getTime()
                         }
                     },
                 },
@@ -208,16 +208,16 @@ class PriceChartFinal extends React.Component {
          console.log(rawDates)
 
         for (let i = 0; i < 288; i++) {
-            dates.push(new Date('2020-01-09T' + rawDates[i])) // remove jan 9th
-        }
-        for (let i = 288; i < 576; i++) {
-            dates.push(new Date('2020-01-10T' + rawDates[i])) // remove jan 9th
-        }
-        for (let i = 576; i < 864; i++) {
             dates.push(new Date('2020-01-11T' + rawDates[i])) // remove jan 9th
         }
-        for (let i = 864; i < rawDates.length; i++) {
+        for (let i = 288; i < 576; i++) {
             dates.push(new Date('2020-01-12T' + rawDates[i])) // remove jan 9th
+        }
+        for (let i = 576; i < 864; i++) {
+            dates.push(new Date('2020-01-13T' + rawDates[i])) // remove jan 9th
+        }
+        for (let i = 864; i < rawDates.length; i++) {
+            dates.push(new Date('2020-01-14T' + rawDates[i])) // remove jan 9th
         }
 
 

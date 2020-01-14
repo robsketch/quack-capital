@@ -29,6 +29,7 @@ class MovingAverage extends React.Component {
                     enabled: false
                 },
                 stroke: {
+                    width:3,
                     curve: 'straight'
                 },
                 title: {
