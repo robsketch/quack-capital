@@ -14,7 +14,7 @@ class MovingAverage extends React.Component {
         this.state = {
 
             series: [{
-                name: "Desktops",
+                name: "",
                 data: []
             }],
             options: {
@@ -29,7 +29,7 @@ class MovingAverage extends React.Component {
                     enabled: false
                 },
                 stroke: {
-                    width:3,
+                    width: 3,
                     curve: 'straight'
                 },
                 title: {
@@ -45,24 +45,24 @@ class MovingAverage extends React.Component {
 
                 yaxis: {
                     labels: {
-                      formatter: function (val) {
-                          if (val) {
-                        return (val).toFixed(2);
-                          }
-                      },
+                        formatter: function (val) {
+                            if (val) {
+                                return (val).toFixed(2);
+                            }
+                        },
                     },
                     title: {
-                      text: 'Price'
+                        text: 'Price'
                     },
-                  },
+                },
                 xaxis: {
                     type: 'datetime',
                     labels: {
-                        formatter: function(val) {
+                        formatter: function (val) {
                             if (val) {
-                            let x = new Date(val)
-                            // return x.getHours().toString() + ':' + x.getMinutes();
-                            return x.toLocaleTimeString();
+                                let x = new Date(val)
+                                // return x.getHours().toString() + ':' + x.getMinutes();
+                                return x.toLocaleTimeString();
                             }
                             //return (val / 10000).toFixed(0);
                         },
@@ -70,17 +70,15 @@ class MovingAverage extends React.Component {
                     title: {
                         text: 'Time'
                     },
-                    axisBorder:{
+                    axisBorder: {
                         // color: "#333"
                     }
                 },
                 tooltip: {
                     // theme: 'dark',
                 }
-
             },
-
-
+            colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
         };
         this.getData();
     }
@@ -104,7 +102,7 @@ class MovingAverage extends React.Component {
 
 
         // Getting the dates in order
-        
+
 
         // Fetch data from server
         const response = await fetch(url, httpParams)
@@ -134,7 +132,7 @@ class MovingAverage extends React.Component {
         for (let i = 0; i < queryData.result.length; i++) {
 
             var dataTest = []
-            dataTest.push(zip(dates,queryData.result[i].data.y[1]))
+            dataTest.push(zip(dates, queryData.result[i].data.y[1]))
             seriesData.push({
                 name: queryData.result[i].sym,
                 type: 'line',
@@ -144,25 +142,6 @@ class MovingAverage extends React.Component {
 
         this.setState({
             series: seriesData,
-
-            options: {
-                chart: {
-                    // foreColor: '#fff',
-                    // foreColor: '#fff',
-                    height: 1000,
-                    type: 'line',
-                    zoom: {
-                        enabled: true
-                    }
-                },
-                colors:['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
-            },
-            grid: {
-
-                // borderColor: "#40475D",
-
-            },
-        
         })
     }
 

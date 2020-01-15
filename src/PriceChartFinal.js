@@ -173,7 +173,6 @@ class PriceChartFinal extends React.Component {
         console.log('RDB Query Result')
         console.log(queryData)
 
-
         //var testData = []
         for (let i = 0; i < queryData2.result.length; i++) {
             queryData.result[i].data.y[0] = queryData2.result[i].data.y[0].concat(queryData.result[i].data.y[0])
@@ -226,23 +225,16 @@ class PriceChartFinal extends React.Component {
         this.setState({
             series: seriesData,
             seriesLine: seriesData,
-        }
-        )
+        })
     }
-
-
 
     // Ensure data is loaded
     componentDidMount() {
         this.interval = setInterval(() => this.getData(), 10000000)
     }
 
-
-
     render() {
         return (
-
-
             <div id="wrapper">
                 <div id="chart-line2">
                     <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={530} />
@@ -251,8 +243,6 @@ class PriceChartFinal extends React.Component {
                     <ReactApexChart options={this.state.optionsLine} series={this.state.seriesLine} type="area" height={200} />
                 </div>
             </div>
-
-
         );
     }
 }

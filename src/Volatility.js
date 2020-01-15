@@ -14,7 +14,7 @@ class Volatility extends React.Component {
         this.state = {
 
             series: [{
-                name: "Desktops",
+                name: "",
                 data: []
             }],
             options: {
@@ -22,17 +22,20 @@ class Volatility extends React.Component {
                     height: 1000,
                     type: 'line',
                     zoom: {
-                        enabled: true
-                    }
+                        type: 'x',
+                        enabled: true,
+                        autoScaleYaxis: true
+                    },
                 },
                 dataLabels: {
                     enabled: false
                 },
                 stroke: {
+                    width: 3,
                     curve: 'straight'
                 },
                 title: {
-                    text: 'Product Trends by Month',
+                    text: 'Price volatility by sym',
                     align: 'left'
                 },
                 grid: {
@@ -42,10 +45,35 @@ class Volatility extends React.Component {
                     },
                 },
                 xaxis: {
+                    type: 'datetime',
+                    labels: {
+                        formatter: function (val) {
+                            if (val) {
+                                let x = new Date(val)
+                                return x.getFullYear().toString() + '-' + (x.getMonth() + 1).toString() + '-' + x.getDate().toString();
+                            }
+                            //return (val / 10000).toFixed(0);
+                        },
+                    },
+                    title: {
+                        text: 'Time'
+                    },
                     categories: [],
-                }
+                },
+                yaxis: {
+                    labels: {
+                        formatter: function (val) {
+                            if (val) {
+                                return (val).toFixed(2);
+                            }
+                        },
+                    },
+                    title: {
+                        text: 'Volatility'
+                    },
+                },
             },
-
+            colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
         };
         this.getData();
     }
@@ -123,64 +151,6 @@ class Volatility extends React.Component {
 
         this.setState({
             series: seriesData,
-
-            options: {
-                chart: {
-                    height: 1000,
-                    type: 'line',
-                    zoom: {
-                        type: 'x',
-                        enabled: true,
-                        autoScaleYaxis: true
-                    },
-                },
-                colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
-
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    width: 3,
-                    curve: 'straight'
-                },
-                title: {
-                    text: 'Price volatility by sym',
-                    align: 'left'
-                },
-                grid: {
-                    row: {
-                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                        opacity: 0.5
-                    },
-                },
-                xaxis: {
-                    type: 'datetime',
-                    labels: {
-                        formatter: function (val) {
-                            if (val) {
-                                let x = new Date(val)
-                                return x.getFullYear().toString() + '-' + (x.getMonth() + 1).toString() + '-' + x.getDate().toString();
-                            }
-                            //return (val / 10000).toFixed(0);
-                        },
-                    },
-                    title: {
-                        text: 'Time'
-                    },
-                },
-                yaxis: {
-                    labels: {
-                        formatter: function (val) {
-                            if (val) {
-                                return (val).toFixed(2);
-                            }
-                        },
-                    },
-                    title: {
-                        text: 'Volatility'
-                    },
-                }
-            }
         })
     }
 
@@ -191,13 +161,9 @@ class Volatility extends React.Component {
 
     render() {
         return (
-
-
             <div id="chart">
                 <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={550} />
             </div>
-
-
         );
     }
 }
