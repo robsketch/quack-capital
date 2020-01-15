@@ -34,7 +34,11 @@ class MovingAverage extends React.Component {
                 },
                 title: {
                     text: 'Stock Price Running Average',
-                    align: 'left'
+                    align: 'left',
+                    style: {
+                        fontSize:  '23px',
+                        color:  '#011638'
+                      },
                 },
                 grid: {
                     row: {
