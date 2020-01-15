@@ -66,7 +66,8 @@ class PriceChartFinal extends React.Component {
                     size: 0
                 },
                 xaxis: {
-                    type: 'datetime'
+                    type: 'datetime',
+                    title: 'Time'
                 },
                 yaxis: {
                     labels: {
@@ -76,6 +77,7 @@ class PriceChartFinal extends React.Component {
                             }
                         },
                     },
+                    title: 'Price'
                 }
             },
 

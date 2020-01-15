@@ -35,7 +35,7 @@ class Volatility extends React.Component {
                     curve: 'straight'
                 },
                 title: {
-                    text: 'Price volatility by sym',
+                    text: 'Price Volatility by Sym',
                     align: 'left'
                 },
                 grid: {
@@ -50,13 +50,13 @@ class Volatility extends React.Component {
                         formatter: function (val) {
                             if (val) {
                                 let x = new Date(val)
-                                return x.getFullYear().toString() + '-' + (x.getMonth() + 1).toString() + '-' + x.getDate().toString();
+                                return x.getDate().toString() + '-' + (x.getMonth() + 1).toString() + '-' + x.getFullYear().toString();
                             }
                             //return (val / 10000).toFixed(0);
                         },
                     },
                     title: {
-                        text: 'Time'
+                        text: 'Date'
                     },
                     categories: [],
                 },
