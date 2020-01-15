@@ -80,9 +80,10 @@ class MovingAverage extends React.Component {
                 },
                 tooltip: {
                     // theme: 'dark',
-                }
+                },
+                colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
             },
-            colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
+            
         };
         this.getData();
     }
