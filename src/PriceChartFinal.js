@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactApexChart from 'react-apexcharts'
+import ApexCharts from 'apexcharts';
 
 function zip(a, b) {
     var arr = [];
@@ -36,9 +37,9 @@ class PriceChartFinal extends React.Component {
                     text: 'Stock Price over Time by sym',
                     align: 'left',
                     style: {
-                        fontSize:  '23px',
-                        color:  '#011638'
-                      },
+                        fontSize: '23px',
+                        color: '#011638'
+                    },
 
                 },
                 chart: {
@@ -113,8 +114,8 @@ class PriceChartFinal extends React.Component {
                         enabled: true,
                         theme: {
                             monochrome: {
-                                enabled:true,
-                                color:'#255aee',
+                                enabled: true,
+                                color: '#255aee',
                                 shadeTo: 'light',
                                 shadeIntensity: 0.65
                             }
@@ -137,34 +138,13 @@ class PriceChartFinal extends React.Component {
 
 
         };
-        this.getData(); // fetch rdb data
+        //this.getData(); // fetch rdb data
     }
 
-
-
-    async getData() {
-        // Define url, kdb params and http params
+    async getHDBData() {
         const url = 'https://localhost:8090/executeQuery'
-        const kdbParams = {
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:15 xbar time.minute from trade where (time.date=.z.D)',
-            response: true,
-            type: 'sync'
-        }
-        const httpParams = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic '.concat(btoa('user:pass'))
-            },
-            body: JSON.stringify(kdbParams),
-        }
-
-        const response = await fetch(url, httpParams)
-        const queryData = await response.json()
-
-
         const kdbParams2 = {
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by time.date, sym, time:15 xbar time.minute from trade where (time.date>=.z.D-3)',
+            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by time.date, sym, time:5 xbar time.minute from trade where (time.date>=.z.D-3)',
             response: true,
             type: 'sync'
         }
@@ -182,16 +162,74 @@ class PriceChartFinal extends React.Component {
         console.log('HDB Query Result')
         console.log(queryData2)
 
+        var dt = new Date()
+        let dt0 = formatDate(dt.setDate(dt.getDate())) + "T"
+        let dt1 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
+        let dt2 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
+        let dt3 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
+        console.log(dt0, dt1, dt2, dt3)
+
+        var dates = []
+        let rawDates = queryData2.result[0].data.y[0]
+
+        for (let i = 0; i < 288; i++) {
+            dates.push(new Date(dt3 + rawDates[i]))
+        }
+        for (let i = 288; i < 576; i++) {
+            dates.push(new Date(dt2 + rawDates[i]))
+        }
+        for (let i = 576; i < 864; i++) {
+            dates.push(new Date(dt1 + rawDates[i]))
+        }
+
+        let seriesHDBData = []
+        for (let i = 0; i < queryData2.result.length; i++) {
+
+            var dataTest = []
+            dataTest.push(zip(dates, queryData2.result[i].data.y[1]))
+            seriesHDBData.push({
+                name: queryData2.result[i].sym,
+                type: 'line',
+                data: dataTest[0]
+            })
+        }
+
+        // this.setState({
+        //     series: seriesHDBData,
+        //     seriesLine: seriesHDBData,
+        // })
+    }
+
+    async getData() {
+        // Define url, kdb params and http params
+        const url = 'https://localhost:8090/executeQuery'
+        const kdbParams = {
+            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:1 xbar time.minute from trade where (time.date=.z.D)',
+            response: true,
+            type: 'sync'
+        }
+        const httpParams = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic '.concat(btoa('user:pass'))
+            },
+            body: JSON.stringify(kdbParams),
+        }
+
+        const response = await fetch(url, httpParams)
+        const queryData = await response.json()
+
         console.log('RDB Query Result')
         console.log(queryData)
 
         //var testData = []
-        for (let i = 0; i < queryData2.result.length; i++) {
-            queryData.result[i].data.y[0] = queryData2.result[i].data.y[0].concat(queryData.result[i].data.y[0])
-            queryData.result[i].data.y[1] = queryData2.result[i].data.y[1].concat(queryData.result[i].data.y[1])
-        }
-        console.log('ConcatTest')
-        console.log(queryData)
+        // for (let i = 0; i < queryData2.result.length; i++) {
+        //     queryData.result[i].data.y[0] = queryData2.result[i].data.y[0].concat(queryData.result[i].data.y[0])
+        //     queryData.result[i].data.y[1] = queryData2.result[i].data.y[1].concat(queryData.result[i].data.y[1])
+        // }
+        // console.log('ConcatTest')
+        // console.log(queryData)
 
         var dates = []
         let rawDates = queryData.result[0].data.y[0]
@@ -201,21 +239,8 @@ class PriceChartFinal extends React.Component {
 
         var dt = new Date()
         let dt0 = formatDate(dt.setDate(dt.getDate())) + "T"
-        let dt1 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
-        let dt2 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
-        let dt3 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
-        console.log(dt0, dt1, dt2, dt3)
-      
-        for (let i = 0; i < 96; i++) {
-            dates.push(new Date(dt3 + rawDates[i]))
-        }
-        for (let i = 96; i < 192; i++) {
-            dates.push(new Date(dt2 + rawDates[i]))
-        }
-        for (let i = 192; i < 288; i++) {
-            dates.push(new Date(dt1 + rawDates[i]))
-        }
-        for (let i = 288; i < rawDates.length; i++) {
+
+        for (let i = 0; i < rawDates.length; i++) {
             dates.push(new Date(dt0 + rawDates[i]))
         }
 
@@ -231,18 +256,83 @@ class PriceChartFinal extends React.Component {
                 data: dataTest[0]
             })
         }
+
+        ApexCharts.exec('chart2', 'appendSeries', seriesData)
         // console.log('SERIES DATA')
         // console.log(seriesData)
 
-        this.setState({
-            series: seriesData,
-            seriesLine: seriesData,
-        })
+        // this.setState({
+        //     series: seriesData,
+        //     seriesLine: seriesData,
+        // })
+    }
+
+    // async getData2() {
+    //     // Define url, kdb params and http params
+    //     const url = 'https://localhost:8090/executeQuery'
+    //     const kdbParams = {
+    //         query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time:time by sym from trade where (time.date=.z.D)',
+    //         response: true,
+    //         type: 'sync'
+    //     }
+    //     const httpParams = {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': 'Basic '.concat(btoa('user:pass'))
+    //         },
+    //         body: JSON.stringify(kdbParams),
+    //     }
+
+    //     const response = await fetch(url, httpParams)
+    //     const queryData = await response.json()
+
+    //     console.log('REAL Query Result')
+    //     console.log(queryData)
+
+    //     var dates = []
+    //     let rawDates = queryData.result[0].data.y[0]
+
+    //     console.log('rawDates')
+    //     console.log(rawDates)
+
+    //     var dt = new Date()
+    //     let dt0 = formatDate(dt.setDate(dt.getDate())) + "T"
+    //     console.log(dt0)
+
+    //     dates.push(new Date(dt0 + rawDates[0]))
+
+    //     console.log('Dates')
+    //     console.log(dates)
+
+    //     let seriesData2 = []
+    //     for (let i = 0; i < queryData.result.length; i++) {
+
+    //         var dataTest = []
+    //         dataTest.push(zip(dates, queryData.result[i].data.y[1]))
+    //         seriesData2.push({
+    //             name: queryData.result[i].sym,
+    //             type: 'line',
+    //             data: dataTest[0]
+    //         })
+    //     }
+    //     // console.log('SERIES DATA')
+    //     // console.log(seriesData)
+
+    //     this.setState({
+    //         series: seriesData2,
+    //         seriesLine: seriesData2,
+    //     })
+    // }
+
+    toggle(e) {
+        ApexCharts.exec('seriesData', 'toggleSeries', e);
     }
 
     // Ensure data is loaded
     componentDidMount() {
-        this.interval = setInterval(() => this.getData(), 100000000000000)
+        this.getHDBData()
+        this.interval = setInterval(() => this.getData(), 10000)
     }
 
     render() {
