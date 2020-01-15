@@ -41,10 +41,6 @@ class PriceChartFinal extends React.Component {
                     id: 'chart2',
                     type: 'line',
                     height: 1230,
-                    toolbar: {
-                        autoSelected: 'pan',
-                        show: false
-                    },
                     zoom: {
                         tyoe: 'x',
                         autoScaleYaxis: true,
