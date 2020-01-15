@@ -29,6 +29,7 @@ class MovingAverage extends React.Component {
                     enabled: false
                 },
                 stroke: {
+                    width:3,
                     curve: 'straight'
                 },
                 title: {
@@ -60,7 +61,8 @@ class MovingAverage extends React.Component {
                         formatter: function(val) {
                             if (val) {
                             let x = new Date(val)
-                            return x.getHours().toString() + ':00';
+                            // return x.getHours().toString() + ':' + x.getMinutes();
+                            return x.toLocaleTimeString();
                             }
                             //return (val / 10000).toFixed(0);
                         },
