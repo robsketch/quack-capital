@@ -7,6 +7,21 @@ function zip(a, b) {
     return arr;
 }
 
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
 class PriceChartFinal extends React.Component {
     constructor(props) {
         super(props);
@@ -22,7 +37,7 @@ class PriceChartFinal extends React.Component {
                     align: 'left'
                 },
                 chart: {
-        
+
                     id: 'chart2',
                     type: 'line',
                     height: 1230,
@@ -37,7 +52,7 @@ class PriceChartFinal extends React.Component {
                     }
                 },
                 colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
-        
+
                 stroke: {
                     width: 3
                 },
@@ -78,14 +93,10 @@ class PriceChartFinal extends React.Component {
                     },
                     selection: {
                         enabled: true,
-                        xaxis: {
-                            min: new Date('11 Jan 2020').getTime(), //get current date
-                            max: new Date('14 Jan 2020').getTime()
-                        }
                     },
                 },
                 colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
-        
+
                 fill: {
                     type: 'gradient',
                     gradient: {
@@ -98,7 +109,7 @@ class PriceChartFinal extends React.Component {
                     tooltip: {
                         enabled: false
                     }
-        
+
                 },
                 yaxis: {
                     tickAmount: 2,
@@ -174,20 +185,27 @@ class PriceChartFinal extends React.Component {
         var dates = []
         let rawDates = queryData.result[0].data.y[0]
 
-         console.log('rawDates')
-         console.log(rawDates)
+        console.log('rawDates')
+        console.log(rawDates)
+
+        var dt = new Date()
+        let dt0 = formatDate(dt.setDate(dt.getDate())) + "T"
+        let dt1 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
+        let dt2 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
+        let dt3 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
+        console.log(dt0, dt1, dt2, dt3)
 
         for (let i = 0; i < 288; i++) {
-            dates.push(new Date('2020-01-11T' + rawDates[i])) // remove jan 9th
+            dates.push(new Date(dt3 + rawDates[i])) // remove jan 9th
         }
         for (let i = 288; i < 576; i++) {
-            dates.push(new Date('2020-01-12T' + rawDates[i])) // remove jan 9th
+            dates.push(new Date(dt2 + rawDates[i])) // remove jan 9th
         }
         for (let i = 576; i < 864; i++) {
-            dates.push(new Date('2020-01-13T' + rawDates[i])) // remove jan 9th
+            dates.push(new Date(dt1 + rawDates[i])) // remove jan 9th
         }
         for (let i = 864; i < rawDates.length; i++) {
-            dates.push(new Date('2020-01-14T' + rawDates[i])) // remove jan 9th
+            dates.push(new Date(dt0 + rawDates[i])) // remove jan 9th
         }
 
 

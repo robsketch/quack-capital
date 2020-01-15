@@ -1,6 +1,12 @@
 import React from 'react'
 import ReactApexChart from 'react-apexcharts'
 
+function zip(a, b) {
+    var arr = [];
+    for (var key in a) arr.push([a[key], b[key]]);
+    return arr;
+}
+
 class Volatility extends React.Component {
     constructor(props) {
         super(props);
@@ -44,16 +50,11 @@ class Volatility extends React.Component {
         this.getData();
     }
 
-    // Ensure data is loaded
-    componentDidMount() {
-        this.interval = setInterval(() => this.getData(), 10000000)
-    }
-
     async getData() {
         // Define url, kdb params and http params
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
-            query: '{[x] key[x]!([]data:flip each value x)}select t, x by sym from select x: sqrt var price by t: time.date, sym from trade where time.date >= .z.D - 30',
+            query: '{[x] key[x]!([]data:flip each value x)}select t, x by sym from select x: sqrt var price by t: time.date, sym from trade where time.date= .z.D',
             response: true,
             type: 'sync'
         }
@@ -70,6 +71,36 @@ class Volatility extends React.Component {
         const response = await fetch(url, httpParams)
         const queryData = await response.json()
 
+        const kdbParams2 = {
+            query: '{[x] key[x]!([]data:flip each value x)}select t, x by sym from select x: sqrt var price by t: time.date, sym from trade where time.date >= .z.D - 30',
+            response: true,
+            type: 'sync'
+        }
+        const httpParams2 = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic '.concat(btoa('user:pass'))
+            },
+            body: JSON.stringify(kdbParams2),
+        }
+
+        // Fetch data from server
+        const response2 = await fetch(url, httpParams2)
+        const queryData2 = await response2.json()
+        console.log('HDB Query Result')
+        console.log(queryData2)
+
+        console.log('RDB Query Result')
+        console.log(queryData)
+
+        for (let i = 0; i < queryData.result.length; i++) {
+            queryData.result[i].data.y[0] = queryData2.result[i].data.y[0].concat(queryData.result[i].data.y[0])
+            queryData.result[i].data.y[1] = queryData2.result[i].data.y[1].concat(queryData.result[i].data.y[1])
+        }
+        console.log('ConcatTest')
+        console.log(queryData)
+
         // Make an array of the dates that will be plotted on the x-axis.
         var dates = []
         let rawDates = queryData.result[0].data.y[0]
@@ -79,24 +110,15 @@ class Volatility extends React.Component {
         }
 
         let seriesData = []
-        var dataArray = queryData.result;
-        for (let i = 0; i < dataArray.length; i++) {
+        for (let i = 0; i < queryData.result.length; i++) {
 
             var dataTest = []
-            dataTest.push(zip(dates,dataArray[i].data.y[1]))
+            dataTest.push(zip(dates, queryData.result[i].data.y[1]))
             seriesData.push({
-                name: dataArray[i].sym,
+                name: queryData.result[i].sym,
                 type: 'line',
                 data: dataTest[0]
             })
-        }
-
-        function zip(a, b) {
-        var arr = [];
-        for (var key in a) arr.push([a[key], b[key]]);
-        return arr;
-
-        
         }
 
         this.setState({
@@ -118,7 +140,7 @@ class Volatility extends React.Component {
                     enabled: false
                 },
                 stroke: {
-                    width:3,
+                    width: 3,
                     curve: 'straight'
                 },
                 title: {
@@ -134,10 +156,10 @@ class Volatility extends React.Component {
                 xaxis: {
                     type: 'datetime',
                     labels: {
-                        formatter: function(val) {
+                        formatter: function (val) {
                             if (val) {
-                            let x = new Date(val)
-                            return x.getFullYear().toString() + '-' + (x.getMonth()+1).toString() + '-' + x.getDate().toString();
+                                let x = new Date(val)
+                                return x.getFullYear().toString() + '-' + (x.getMonth() + 1).toString() + '-' + x.getDate().toString();
                             }
                             //return (val / 10000).toFixed(0);
                         },
@@ -162,7 +184,10 @@ class Volatility extends React.Component {
         })
     }
 
-
+    // Ensure data is loaded
+    componentDidMount() {
+        this.interval = setInterval(() => this.getData(), 10000000)
+    }
 
     render() {
         return (
