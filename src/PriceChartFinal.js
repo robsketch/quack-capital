@@ -19,7 +19,12 @@ class PriceChartFinal extends React.Component {
             options: {
                 title: {
                     text: 'Stock Price over Time by sym',
-                    align: 'left'
+                    align: 'left',
+                    style: {
+                        fontSize:  '23px',
+                        color:  '#011638'
+                      },
+
                 },
                 chart: {
         
@@ -28,10 +33,10 @@ class PriceChartFinal extends React.Component {
                     height: 1230,
                     toolbar: {
                         autoSelected: 'pan',
-                        show: false
+                        show: true
                     },
                     zoom: {
-                        tyoe: 'x',
+                        type: 'x',
                         autoScaleYaxis: true,
                         enabled: true
                     }
@@ -79,8 +84,8 @@ class PriceChartFinal extends React.Component {
                     selection: {
                         enabled: true,
                         xaxis: {
-                            min: new Date('11 Jan 2020').getTime(), //get current date
-                            max: new Date('14 Jan 2020').getTime()
+                            // min: new Date('12 Jan 2020').getTime(), //get current date
+                            // max: new Date('15 Jan 2020').getTime()
                         }
                     },
                 },
@@ -96,7 +101,16 @@ class PriceChartFinal extends React.Component {
                 xaxis: {
                     type: 'datetime',
                     tooltip: {
-                        enabled: false
+                        enabled: true,
+                        theme: {
+                            monochrome: {
+                                enabled:true,
+                                color:'#255aee',
+                                shadeTo: 'light',
+                                shadeIntensity: 0.65
+                            }
+                        }
+
                     }
         
                 },
@@ -123,7 +137,7 @@ class PriceChartFinal extends React.Component {
         // Define url, kdb params and http params
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:5 xbar time.minute from trade where (time.date=.z.D)',
+            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:15 xbar time.minute from trade where (time.date=.z.D)',
             response: true,
             type: 'sync'
         }
@@ -141,7 +155,7 @@ class PriceChartFinal extends React.Component {
 
 
         const kdbParams2 = {
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by time.date, sym, time:5 xbar time.minute from trade where (time.date>=.z.D-3)',
+            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by time.date, sym, time:15 xbar time.minute from trade where (time.date>=.z.D-3)',
             response: true,
             type: 'sync'
         }
@@ -177,17 +191,17 @@ class PriceChartFinal extends React.Component {
          console.log('rawDates')
          console.log(rawDates)
 
-        for (let i = 0; i < 288; i++) {
-            dates.push(new Date('2020-01-11T' + rawDates[i])) // remove jan 9th
-        }
-        for (let i = 288; i < 576; i++) {
+        for (let i = 0; i < 96; i++) {
             dates.push(new Date('2020-01-12T' + rawDates[i])) // remove jan 9th
         }
-        for (let i = 576; i < 864; i++) {
+        for (let i = 96; i < 192; i++) {
             dates.push(new Date('2020-01-13T' + rawDates[i])) // remove jan 9th
         }
-        for (let i = 864; i < rawDates.length; i++) {
+        for (let i = 192; i < 288; i++) {
             dates.push(new Date('2020-01-14T' + rawDates[i])) // remove jan 9th
+        }
+        for (let i = 288; i < rawDates.length; i++) {
+            dates.push(new Date('2020-01-15T' + rawDates[i])) // remove jan 9th
         }
 
 
@@ -216,7 +230,7 @@ class PriceChartFinal extends React.Component {
 
     // Ensure data is loaded
     componentDidMount() {
-        this.interval = setInterval(() => this.getData(), 10000000)
+        this.interval = setInterval(() => this.getData(), 100000000000000)
     }
 
 

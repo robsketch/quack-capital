@@ -872,31 +872,40 @@ caption {
 .duck-title {
   display: inline;
   font-size: 3em;
+  font-weight: 20;
   color: var(--ice);
+  font-style: 'Helvetica, Arial, sans-serif';
 }
 
 .top-bar {
-  padding: 0.9em 0;
+  padding: 1.2em 0;
   margin: 0;
   background-color: var(--hillary);
   border-style: solid;
   border-width: 0 0 0.5em 0;
-  border-color: var(--cool-blue)
+  border-color: var(--cool-blue);
+  font-style: Helvetica, Arial, sans-serif;
+  
+
 }
 
 .inner-container1 {
   display: inline-block;
-  padding: 0.5em 3em;
+  padding: 5em 3em;
   width: 50%;
   margin: auto;
+  font-style: Helvetica, Arial, sans-serif;
   /* background-color: #1B213B; */
 }
 
 .inner-container2 {
   margin: 0;
   padding: 0;
+  border-radius: 4px;
   max-width: 100em;
   margin: auto;
+  font-style: Helvetica, Arial, sans-serif;
+
   /* background-color: #262D47; */
 }
 
@@ -907,6 +916,7 @@ caption {
 .thin {
   width: 50%;
   display: inline-table;
+  
 }
 
 .inner-container-top {

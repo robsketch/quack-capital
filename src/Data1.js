@@ -122,7 +122,7 @@ class Data1 extends Component {
 
   // Ensure data is loaded
   componentDidMount() {
-    this.interval = setInterval(() => this.getData(), 1000)
+    this.interval = setInterval(() => this.getData(), 5000)
     this.getDataHDB()
   }
 
@@ -134,7 +134,7 @@ class Data1 extends Component {
 
     const data = this.state.data
     const dataHDB = this.state.dataHDB
-    const headers = ['Ticker', 'Price', 'Trend', 'Volume', 'PrevClose', 'Open', 'High', 'Low']
+    const headers = ['Stock', 'Price', 'Trend', 'Volume', 'Previous Close', 'Open', 'High', 'Low']
 
     return (
       <div>

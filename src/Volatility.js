@@ -26,8 +26,12 @@ class Volatility extends React.Component {
                     curve: 'straight'
                 },
                 title: {
-                    text: 'Product Trends by Month',
-                    align: 'left'
+                    text: 'Price Volatility by Sym',
+                    align: 'left',
+                    style: {
+                        fontSize:  '23px',
+                        color:  '#011638'
+                      },
                 },
                 grid: {
                     row: {
