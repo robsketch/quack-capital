@@ -48,7 +48,7 @@ render() {
             </div>
           </div>
           <div className="inner-container2">     
-          <h2 className="charts-title" > Price Charts </h2>
+          <h2 className="charts-title" >  </h2>
 
           <div className="inner-container-top"><PriceChartFinal /></div>{/*<div className="inner-container1"><Volatility /></div>*/}
             {/* <div class="thin">

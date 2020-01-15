@@ -34,7 +34,12 @@ class PriceChartFinal extends React.Component {
             options: {
                 title: {
                     text: 'Stock Price over Time by sym',
-                    align: 'left'
+                    align: 'left',
+                    style: {
+                        fontSize:  '23px',
+                        color:  '#011638'
+                      },
+
                 },
                 chart: {
 
@@ -42,7 +47,7 @@ class PriceChartFinal extends React.Component {
                     type: 'line',
                     height: 1230,
                     zoom: {
-                        tyoe: 'x',
+                        type: 'x',
                         autoScaleYaxis: true,
                         enabled: true
                     }
@@ -105,7 +110,16 @@ class PriceChartFinal extends React.Component {
                 xaxis: {
                     type: 'datetime',
                     tooltip: {
-                        enabled: false
+                        enabled: true,
+                        theme: {
+                            monochrome: {
+                                enabled:true,
+                                color:'#255aee',
+                                shadeTo: 'light',
+                                shadeIntensity: 0.65
+                            }
+                        }
+
                     }
 
                 },
@@ -132,7 +146,7 @@ class PriceChartFinal extends React.Component {
         // Define url, kdb params and http params
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:5 xbar time.minute from trade where (time.date=.z.D)',
+            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:15 xbar time.minute from trade where (time.date=.z.D)',
             response: true,
             type: 'sync'
         }
@@ -150,7 +164,7 @@ class PriceChartFinal extends React.Component {
 
 
         const kdbParams2 = {
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by time.date, sym, time:5 xbar time.minute from trade where (time.date>=.z.D-3)',
+            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by time.date, sym, time:15 xbar time.minute from trade where (time.date>=.z.D-3)',
             response: true,
             type: 'sync'
         }
@@ -191,18 +205,18 @@ class PriceChartFinal extends React.Component {
         let dt2 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
         let dt3 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
         console.log(dt0, dt1, dt2, dt3)
-
-        for (let i = 0; i < 288; i++) {
-            dates.push(new Date(dt3 + rawDates[i])) // remove jan 9th
+      
+        for (let i = 0; i < 96; i++) {
+            dates.push(new Date(dt3 + rawDates[i]))
         }
-        for (let i = 288; i < 576; i++) {
-            dates.push(new Date(dt2 + rawDates[i])) // remove jan 9th
+        for (let i = 96; i < 192; i++) {
+            dates.push(new Date(dt2 + rawDates[i]))
         }
-        for (let i = 576; i < 864; i++) {
-            dates.push(new Date(dt1 + rawDates[i])) // remove jan 9th
+        for (let i = 192; i < 288; i++) {
+            dates.push(new Date(dt1 + rawDates[i]))
         }
-        for (let i = 864; i < rawDates.length; i++) {
-            dates.push(new Date(dt0 + rawDates[i])) // remove jan 9th
+        for (let i = 288; i < rawDates.length; i++) {
+            dates.push(new Date(dt0 + rawDates[i]))
         }
 
 
@@ -228,7 +242,7 @@ class PriceChartFinal extends React.Component {
 
     // Ensure data is loaded
     componentDidMount() {
-        this.interval = setInterval(() => this.getData(), 10000000)
+        this.interval = setInterval(() => this.getData(), 100000000000000)
     }
 
     render() {

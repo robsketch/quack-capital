@@ -36,7 +36,11 @@ class Volatility extends React.Component {
                 },
                 title: {
                     text: 'Price Volatility by Sym',
-                    align: 'left'
+                    align: 'left',
+                    style: {
+                        fontSize:  '23px',
+                        color:  '#011638'
+                      },
                 },
                 grid: {
                     row: {
