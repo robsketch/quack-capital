@@ -7,6 +7,21 @@ function zip(a, b) {
     return arr;
 }
 
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
 class PriceChartFinal extends React.Component {
     constructor(props) {
         super(props);
@@ -27,14 +42,10 @@ class PriceChartFinal extends React.Component {
 
                 },
                 chart: {
-        
+
                     id: 'chart2',
                     type: 'line',
                     height: 1230,
-                    toolbar: {
-                        autoSelected: 'pan',
-                        show: true
-                    },
                     zoom: {
                         type: 'x',
                         autoScaleYaxis: true,
@@ -42,7 +53,7 @@ class PriceChartFinal extends React.Component {
                     }
                 },
                 colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
-        
+
                 stroke: {
                     width: 3
                 },
@@ -56,7 +67,8 @@ class PriceChartFinal extends React.Component {
                     size: 0
                 },
                 xaxis: {
-                    type: 'datetime'
+                    type: 'datetime',
+                    title: 'Time'
                 },
                 yaxis: {
                     labels: {
@@ -66,6 +78,7 @@ class PriceChartFinal extends React.Component {
                             }
                         },
                     },
+                    title: 'Price'
                 }
             },
 
@@ -83,14 +96,10 @@ class PriceChartFinal extends React.Component {
                     },
                     selection: {
                         enabled: true,
-                        xaxis: {
-                            // min: new Date('12 Jan 2020').getTime(), //get current date
-                            // max: new Date('15 Jan 2020').getTime()
-                        }
                     },
                 },
                 colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
-        
+
                 fill: {
                     type: 'gradient',
                     gradient: {
@@ -112,7 +121,7 @@ class PriceChartFinal extends React.Component {
                         }
 
                     }
-        
+
                 },
                 yaxis: {
                     tickAmount: 2,
@@ -176,7 +185,6 @@ class PriceChartFinal extends React.Component {
         console.log('RDB Query Result')
         console.log(queryData)
 
-
         //var testData = []
         for (let i = 0; i < queryData2.result.length; i++) {
             queryData.result[i].data.y[0] = queryData2.result[i].data.y[0].concat(queryData.result[i].data.y[0])
@@ -188,20 +196,27 @@ class PriceChartFinal extends React.Component {
         var dates = []
         let rawDates = queryData.result[0].data.y[0]
 
-         console.log('rawDates')
-         console.log(rawDates)
+        console.log('rawDates')
+        console.log(rawDates)
 
+        var dt = new Date()
+        let dt0 = formatDate(dt.setDate(dt.getDate())) + "T"
+        let dt1 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
+        let dt2 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
+        let dt3 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
+        console.log(dt0, dt1, dt2, dt3)
+      
         for (let i = 0; i < 96; i++) {
-            dates.push(new Date('2020-01-12T' + rawDates[i])) // remove jan 9th
+            dates.push(new Date(dt3 + rawDates[i]))
         }
         for (let i = 96; i < 192; i++) {
-            dates.push(new Date('2020-01-13T' + rawDates[i])) // remove jan 9th
+            dates.push(new Date(dt2 + rawDates[i]))
         }
         for (let i = 192; i < 288; i++) {
-            dates.push(new Date('2020-01-14T' + rawDates[i])) // remove jan 9th
+            dates.push(new Date(dt1 + rawDates[i]))
         }
         for (let i = 288; i < rawDates.length; i++) {
-            dates.push(new Date('2020-01-15T' + rawDates[i])) // remove jan 9th
+            dates.push(new Date(dt0 + rawDates[i]))
         }
 
 
@@ -222,23 +237,16 @@ class PriceChartFinal extends React.Component {
         this.setState({
             series: seriesData,
             seriesLine: seriesData,
-        }
-        )
+        })
     }
-
-
 
     // Ensure data is loaded
     componentDidMount() {
         this.interval = setInterval(() => this.getData(), 100000000000000)
     }
 
-
-
     render() {
         return (
-
-
             <div id="wrapper">
                 <div id="chart-line2">
                     <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={530} />
@@ -247,8 +255,6 @@ class PriceChartFinal extends React.Component {
                     <ReactApexChart options={this.state.optionsLine} series={this.state.seriesLine} type="area" height={200} />
                 </div>
             </div>
-
-
         );
     }
 }
