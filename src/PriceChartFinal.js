@@ -7,21 +7,6 @@ function zip(a, b) {
     return arr;
 }
 
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
-
-
 class PriceChartFinal extends React.Component {
     constructor(props) {
         super(props);
@@ -33,12 +18,12 @@ class PriceChartFinal extends React.Component {
             }],
             options: {
                 title: {
-                    text: 'Stock Price over Time by sym',
+                    text: 'Historical Stock Price by Sym',
                     align: 'left',
                     style: {
-                        fontSize:  '23px',
-                        color:  '#011638'
-                      },
+                        fontSize: '23px',
+                        color: '#011638'
+                    },
 
                 },
                 chart: {
@@ -68,7 +53,15 @@ class PriceChartFinal extends React.Component {
                 },
                 xaxis: {
                     type: 'datetime',
-                    title: 'Time'
+                    formatter: function (val) {
+                        if (val) {
+                            let x = new Date(val)
+                            var moment = require('moment')
+                            return moment(x).format('Do MMM')
+                            // return x.getDate().toString() + '-' + (x.getMonth() + 1).toString() + '-' + x.getFullYear().toString();
+                        }
+                        //return (val / 10000).toFixed(0);
+                    },
                 },
                 yaxis: {
                     labels: {
@@ -78,7 +71,6 @@ class PriceChartFinal extends React.Component {
                             }
                         },
                     },
-                    title: 'Price'
                 }
             },
 
@@ -98,6 +90,10 @@ class PriceChartFinal extends React.Component {
                         enabled: true,
                     },
                 },
+                legend: {
+                    show: false
+                },
+
                 colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
 
                 fill: {
@@ -113,8 +109,8 @@ class PriceChartFinal extends React.Component {
                         enabled: true,
                         theme: {
                             monochrome: {
-                                enabled:true,
-                                color:'#255aee',
+                                enabled: true,
+                                color: '#255aee',
                                 shadeTo: 'light',
                                 shadeIntensity: 0.65
                             }
@@ -128,7 +124,7 @@ class PriceChartFinal extends React.Component {
                     labels: {
                         formatter: function (val) {
                             if (val) {
-                                return (val).toFixed(2);
+                                return (val).toFixed(0);
                             }
                         },
                     },
@@ -196,29 +192,20 @@ class PriceChartFinal extends React.Component {
         var dates = []
         let rawDates = queryData.result[0].data.y[0]
 
-        console.log('rawDates')
-        console.log(rawDates)
+        var moment = require('moment')
 
-        var dt = new Date()
-        let dt0 = formatDate(dt.setDate(dt.getDate())) + "T"
-        let dt1 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
-        let dt2 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
-        let dt3 = formatDate(dt.setDate(dt.getDate() - 1)) + "T"
-        console.log(dt0, dt1, dt2, dt3)
-      
         for (let i = 0; i < 96; i++) {
-            dates.push(new Date(dt3 + rawDates[i]))
+            dates.push(new Date((moment().subtract(3, 'day').format('YYYY-MM-DD') + "T") + rawDates[i]))
         }
         for (let i = 96; i < 192; i++) {
-            dates.push(new Date(dt2 + rawDates[i]))
+            dates.push(new Date((moment().subtract(2, 'day').format('YYYY-MM-DD') + "T") + rawDates[i]))
         }
         for (let i = 192; i < 288; i++) {
-            dates.push(new Date(dt1 + rawDates[i]))
+            dates.push(new Date((moment().subtract(1, 'day').format('YYYY-MM-DD') + "T") + rawDates[i]))
         }
         for (let i = 288; i < rawDates.length; i++) {
-            dates.push(new Date(dt0 + rawDates[i]))
+            dates.push(new Date((moment().format('YYYY-MM-DD') + "T") + rawDates[i]))
         }
-
 
         let seriesData = []
         for (let i = 0; i < queryData.result.length; i++) {
@@ -242,7 +229,7 @@ class PriceChartFinal extends React.Component {
 
     // Ensure data is loaded
     componentDidMount() {
-        this.interval = setInterval(() => this.getData(), 100000000000000)
+        this.getData()
     }
 
     render() {

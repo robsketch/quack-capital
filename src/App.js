@@ -5,6 +5,7 @@ import Data1 from './Data1'
 import MovingAverage from './MovingAverage'
 import Volatility from './Volatility'
 import PriceChartFinal from './PriceChartFinal'
+// import RealTimePrice from './RealTimePrice'
 
 class App extends Component {
     state = {
