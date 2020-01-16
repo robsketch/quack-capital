@@ -128,9 +128,12 @@ class MovingAverage extends React.Component {
             dates.push(new Date(rawDates[i]))
         }
         
+        var dates = []
         var moment = require('moment')
+        let today = moment().format('YYYY-MM-DD') + "T"
+
         for (let i = 0; i < queryData.result[0].data.y[0].length; i++) {
-            dates.push(new Date(moment().format('YYYY-MM-DD') + "T") + queryData.result[0].data.y[0][i]);
+            dates.push(new Date(String(today) + queryData.result[0].data.y[0][i]));
         }
 
         let seriesData = []
