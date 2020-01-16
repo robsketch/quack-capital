@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactApexChart from 'react-apexcharts'
+import moment from 'moment';
 
 function zip(a, b) {
     var arr = [];
@@ -54,7 +55,9 @@ class Volatility extends React.Component {
                         formatter: function (val) {
                             if (val) {
                                 let x = new Date(val)
-                                return x.getDate().toString() + '-' + (x.getMonth() + 1).toString() + '-' + x.getFullYear().toString();
+                                var moment = require('moment')
+                                return moment(x).format('Do MMM YY')
+                                // return x.getDate().toString() + '-' + (x.getMonth() + 1).toString() + '-' + x.getFullYear().toString();
                             }
                             //return (val / 10000).toFixed(0);
                         },
@@ -68,7 +71,7 @@ class Volatility extends React.Component {
                     labels: {
                         formatter: function (val) {
                             if (val) {
-                                return (val).toFixed(2);
+                                return (val).toFixed(0);
                             }
                         },
                     },

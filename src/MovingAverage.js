@@ -51,7 +51,7 @@ class MovingAverage extends React.Component {
                     labels: {
                         formatter: function (val) {
                             if (val) {
-                                return (val).toFixed(2);
+                                return (val).toFixed(0);
                             }
                         },
                     },
@@ -66,7 +66,9 @@ class MovingAverage extends React.Component {
                             if (val) {
                                 let x = new Date(val)
                                 // return x.getHours().toString() + ':' + x.getMinutes();
-                                return x.toLocaleTimeString();
+                                // return x.toLocaleTimeString();
+                                var moment = require('moment')
+                                return moment(x).format('hh:mm:ss')
                             }
                             //return (val / 10000).toFixed(0);
                         },
