@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactApexChart from 'react-apexcharts'
-import moment from 'moment';
 
 function zip(a, b) {
     var arr = [];
@@ -36,7 +35,7 @@ class Volatility extends React.Component {
                     curve: 'straight'
                 },
                 title: {
-                    text: 'Price Volatility by Sym',
+                    text: 'Price Volatility',
                     align: 'left',
                     style: {
                         fontSize:  '23px',

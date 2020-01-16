@@ -18,7 +18,7 @@ class PriceChartFinal extends React.Component {
             }],
             options: {
                 title: {
-                    text: 'Stock Price over Time by sym',
+                    text: 'Historical Stock Price by Sym',
                     align: 'left',
                     style: {
                         fontSize: '23px',
@@ -193,7 +193,7 @@ class PriceChartFinal extends React.Component {
         let rawDates = queryData.result[0].data.y[0]
 
         var moment = require('moment')
-        
+
         for (let i = 0; i < 96; i++) {
             dates.push(new Date((moment().subtract(3, 'day').format('YYYY-MM-DD') + "T") + rawDates[i]))
         }
