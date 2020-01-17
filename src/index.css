@@ -768,7 +768,7 @@ select::-ms-expand {
 label {
   font-weight: 600;
   max-width: 100%;
-  display: block;
+  display: inline;
   margin: 1rem 0 .5rem; }
 
 @media (min-width: 600px) {
@@ -923,4 +923,9 @@ caption {
 
   /* background-color: #1B213B; */
 
+}
+
+.buttonBar {
+  text-align: center;
+  margin-bottom: 3em;
 }

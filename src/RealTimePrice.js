@@ -12,23 +12,33 @@ class RealTimePrice extends React.Component {
         super(props);
 
         this.state = {
-
+            query: "{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from RTPx where sym in `AAPL",
+            availableSyms: [],
+            checkedSyms: ["AAPL"],
             series: [{
                 data: []
             }],
             options: {
                 title: {
-                    text: 'Stock Price over Time by sym',
+                    text: 'Real-Time Stock Price over Time by Sym for Today',
                     align: 'left',
                     style: {
-                        fontSize:  '23px',
-                        color:  '#011638'
-                      },
+                        fontSize: '23px',
+                        color: '#011638'
+                    },
 
                 },
+                legend:{
+                    onItemClick: {
+                        toggleDataSeries: false
+                    },
+                    onItemHover: {
+                        highlightDataSeries: false
+                    }
+                },
                 chart: {
-        
-                    id: 'chart2',
+
+                    id: 'chart3',
                     type: 'line',
                     height: 1230,
                     toolbar: {
@@ -41,10 +51,10 @@ class RealTimePrice extends React.Component {
                         enabled: false
                     }
                 },
-                colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
-        
+                colors: ['#1A8FE3', '#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2'],
+
                 stroke: {
-                    width: 3
+                    width: 4
                 },
                 dataLabels: {
                     enabled: false
@@ -90,7 +100,7 @@ class RealTimePrice extends React.Component {
                     },
                 },
                 colors: ['#484041', '#E07A5F', '#3D405B', '#81B29A', '#011638', '#E6C229', '#F17105', '#D11149', '#6610F2', '#1A8FE3'],
-        
+
                 fill: {
                     type: 'gradient',
                     gradient: {
@@ -104,15 +114,15 @@ class RealTimePrice extends React.Component {
                         enabled: true,
                         theme: {
                             monochrome: {
-                                enabled:true,
-                                color:'#255aee',
+                                enabled: true,
+                                color: '#255aee',
                                 shadeTo: 'light',
                                 shadeIntensity: 0.65
                             }
                         }
 
                     }
-        
+
                 },
                 yaxis: {
                     tickAmount: 2,
@@ -129,16 +139,38 @@ class RealTimePrice extends React.Component {
 
         };
         this.getData(); // fetch rdb data
+        this.getSyms();
     }
 
+    handleSymTick = (event) => {
+        let checkedSyms = Object.assign([], this.state.checkedSyms)
+        if (event.target.checked) {
+            checkedSyms.push(event.target.name)
+        } else {
+            if (this.state.checkedSyms.length > 1) {
+                const index = checkedSyms.indexOf(event.target.name)
+                checkedSyms.splice(index, 1)
+            }
+        }
+        
+        this.setState({checkedSyms})
+    }
 
+    buttonSym(sym) {
+        return (
+            <>
+                <input id={sym} type="checkbox" name={sym} onChange={this.handleSymTick} checked={this.state.checkedSyms.includes(sym)} />
+                <label htmlFor={sym}> {sym} </label>
+            </>
+        )
+    }
 
-    async getData() {
-        // Define url, kdb params and http params
+    async getSyms() {
+        // This function is run once on the creation of the react component and polls the rdb for 
+        // the syms available.
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
-            //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:1 xbar time.minute from trade where (time.date=.z.D),(time within(.z.T-3600000;.z.T))',
-            query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from RTPx where sym=`GOOG',
+            query: 'asc distinct exec sym from RTPx',
             response: true,
             type: 'sync'
         }
@@ -153,65 +185,57 @@ class RealTimePrice extends React.Component {
 
         const response = await fetch(url, httpParams)
         var queryData = await response.json()
+        this.state.availableSyms = queryData.result
+
+        
+    }
+
+    makeQuery() {
+        let listOfSyms = "`" + this.state.checkedSyms.join("`");
+
+        let newQuery = "{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from RTPx where sym in " + listOfSyms;
+        this.setState({query: newQuery})
+    }
+
+    async getData() {
+        var symChoice = '`AAPL`AIG'
+        // Define url, kdb params and http params
+        const url = 'https://localhost:8090/executeQuery'
+        const kdbParams = {
+            //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by sym, time:1 xbar time.minute from trade where (time.date=.z.D),(time within(.z.T-3600000;.z.T))',
+            //query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from RTPx where sym in ' + symChoice,
+            query: this.state.query,
+            response: true,
+            type: 'sync'
+        }
+        const httpParams = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic '.concat(btoa('user:pass'))
+            },
+            body: JSON.stringify(kdbParams),
+        }
+
+        this.makeQuery()
+        const response = await fetch(url, httpParams)
+        var queryData = await response.json()
         //const queryData = queryData.concat(lastPoll)
-        console.log('RTPx')
-        console.log(queryData)
-
-
-        // const kdbParams2 = {
-        //     query: '{[x] key[x]!([]data:flip each value x)}select `time$time,price by sym from select last price,time by time.date, sym, time:15 xbar time.minute from trade where (time.date>=.z.D-3)',
-        //     response: true,
-        //     type: 'sync'
-        // }
-        // const httpParams2 = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': 'Basic '.concat(btoa('user:pass'))
-        //     },
-        //     body: JSON.stringify(kdbParams2),
-        // }
-
-        // const response2 = await fetch(url, httpParams2)
-        // const queryData2 = await response2.json()
-        // console.log('HDB Query Result')
-        // console.log(queryData2)
-
-        // console.log('RDB Query Result')
-        // console.log(queryData)
-
-
-        // //var testData = []
-        // for (let i = 0; i < queryData2.result.length; i++) {
-        //     queryData.result[i].data.y[0] = queryData2.result[i].data.y[0].concat(queryData.result[i].data.y[0])
-        //     queryData.result[i].data.y[1] = queryData2.result[i].data.y[1].concat(queryData.result[i].data.y[1])
-        // }
-        // console.log('ConcatTest')
+        // console.log('RTPx')
         // console.log(queryData)
 
         var dates = []
         let rawDates = queryData.result[0].data.y[0]
 
-         console.log('rawDates')
-         console.log(rawDates)
+        // console.log('rawDates')
+        // console.log(rawDates)
 
-         console.log('rea-time price data')
-         console.log(queryData)
+        // console.log('rea-time price data')
+        // console.log(queryData)
 
         for (let i = 0; i < rawDates.length; i++) {
             dates.push(new Date('2020-01-12T' + rawDates[i])) // remove jan 9th
         }
-        // }
-        // for (let i = 96; i < 192; i++) {
-        //     dates.push(new Date('2020-01-13T' + rawDates[i])) // remove jan 9th
-        // }
-        // for (let i = 192; i < 288; i++) {
-        //     dates.push(new Date('2020-01-14T' + rawDates[i])) // remove jan 9th
-        // }
-        // for (let i = 288; i < rawDates.length; i++) {
-        //     dates.push(new Date('2020-01-15T' + rawDates[i])) // remove jan 9th
-        // }
-
 
         let seriesData = []
         for (let i = 0; i < queryData.result.length; i++) {
@@ -224,41 +248,30 @@ class RealTimePrice extends React.Component {
                 data: dataTest[0]
             })
         }
-        // console.log('SERIES DATA')
-        // console.log(seriesData)
-
-
-
-        this.setState({
-            series: seriesData,
-            //seriesLine: seriesData,
-        }
-        )
-
+        this.setState({ series: seriesData })
     }
 
-
-
-
-    // Ensure data is loaded
     componentDidMount() {
         this.interval = setInterval(() => this.getData(), 1000)
     }
 
-
-
     render() {
+        console.log(this.state.checkedSyms)
         return (
+            <>
+                {/* {this.state.availableSyms.map(x => this.buttonSym(x))} */}
+                
 
+                <div id="wrapper">
+                    <div id="chart-line2">
 
-            <div id="wrapper">
-                <div id="chart-line2">
-                    <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={530} />
+                        <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={530} />
+                        <div className="buttonBar">
+                            {this.state.availableSyms.map(x => this.buttonSym(x))}
+                        </div>
+                    </div>
                 </div>
-                <div id="chart-line">
-                    {/* <ReactApexChart options={this.state.optionsLine} series={this.state.seriesLine} type="area" height={200} /> */}
-                </div>
-            </div>
+            </>
 
 
         );
