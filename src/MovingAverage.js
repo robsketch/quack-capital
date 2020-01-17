@@ -51,7 +51,7 @@ class MovingAverage extends React.Component {
                     labels: {
                         formatter: function (val) {
                             if (val) {
-                                return (val).toFixed(2);
+                                return (val).toFixed(0);
                             }
                         },
                     },
@@ -66,7 +66,9 @@ class MovingAverage extends React.Component {
                             if (val) {
                                 let x = new Date(val)
                                 // return x.getHours().toString() + ':' + x.getMinutes();
-                                return x.toLocaleTimeString();
+                                // return x.toLocaleTimeString();
+                                var moment = require('moment')
+                                return moment(x).format('hh:mm:ss')
                             }
                             //return (val / 10000).toFixed(0);
                         },
@@ -125,11 +127,13 @@ class MovingAverage extends React.Component {
         for (let i = 0; i < rawDates.length; i++) {
             dates.push(new Date(rawDates[i]))
         }
-
-        // var seriesData = []
+        
         var dates = []
+        var moment = require('moment')
+        let today = moment().format('YYYY-MM-DD') + "T"
+
         for (let i = 0; i < queryData.result[0].data.y[0].length; i++) {
-            dates.push(new Date('2020-01-09T' + queryData.result[0].data.y[0][i]));
+            dates.push(new Date(String(today) + queryData.result[0].data.y[0][i]));
         }
 
         let seriesData = []
