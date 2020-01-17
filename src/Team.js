@@ -14,12 +14,12 @@ function Team() {
         <h1>The Team</h1>
         <div className="team">
         <div class="member">
-                <h3>Phillip Gunning</h3>
-                <p>Didn't do stuff for his team</p>
+                <h3>Philip Gunning</h3>
+                <p>Enjoyed mocking everyone whilst working on grafana.</p>
             </div>
             <div class="member">
                 <h3>Matthew Greenlees</h3>
-                <p>Did stuff for his team</p>
+                <p>Typed in the stuff Rob dictated.</p>
             </div>
             <div class="member">
                 <h3>Robert Sketch</h3>
@@ -27,7 +27,7 @@ function Team() {
             </div>
             <div class="member">
                 <h3>Eoin Stewart</h3>
-                <p>Also did stuff for his team</p>
+                <p>Made this sweet picture and nearly got the gateway to work.</p>
             </div>
             <div class="member">
                 <h3>Andrew McNaught</h3>
