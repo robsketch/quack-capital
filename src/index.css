@@ -919,13 +919,22 @@ caption {
   
 }
 
-.inner-container-top {
+.team {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
 
-  /* background-color: #1B213B; */
 
+.teamPic {
+  display: block;
+  max-width: 70%;
+  margin: 3em auto;
 }
 
 .buttonBar {
   text-align: center;
   margin-bottom: 3em;
+
 }
