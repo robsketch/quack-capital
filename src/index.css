@@ -919,17 +919,15 @@ caption {
   
 }
 
-.inner-container-top {
-
-  /* background-color: #1B213B; */
-
+.team {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
 }
 
-.myImage {
-  text-align: center;
-  width: 60px;
-  height: 60px;
-  /* background-image: url("./icons/add-circle.png"); */
-  background-repeat: no-repeat;
-  background-size: 100%;
+.teamPic {
+  display: block;
+  max-width: 70%;
+  margin: 3em auto;
 }
