@@ -924,3 +924,12 @@ caption {
   /* background-color: #1B213B; */
 
 }
+
+.myImage {
+  text-align: center;
+  width: 60px;
+  height: 60px;
+  /* background-image: url("./icons/add-circle.png"); */
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
