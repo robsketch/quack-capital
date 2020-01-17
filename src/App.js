@@ -6,7 +6,7 @@ import MovingAverage from './MovingAverage'
 import Volatility from './Volatility'
 import PriceChartFinal from './PriceChartFinal'
 import Team from './Team'
-// import RealTimePrice from './RealTimePrice'
+import RealTimePrice from './RealTimePrice'
 
 class App extends Component {
   state = {
@@ -47,8 +47,9 @@ class App extends Component {
         <div className="inner-container2">
           <h2 className="charts-title" >  </h2>
 
-          <div className="inner-container-top"><PriceChartFinal /></div>{/*<div className="inner-container1"><Volatility /></div>*/}
-          {/* <div class="thin">
+
+          <div className="inner-container-top"><RealTimePrice /><PriceChartFinal /></div>{/*<div className="inner-container1"><Volatility /></div>*/}
+            {/* <div class="thin">
               <BarChart />
             </div> */}
           {/* <div class="thin"> */}

@@ -768,7 +768,7 @@ select::-ms-expand {
 label {
   font-weight: 600;
   max-width: 100%;
-  display: block;
+  display: inline;
   margin: 1rem 0 .5rem; }
 
 @media (min-width: 600px) {
@@ -926,8 +926,15 @@ caption {
   grid-auto-rows: minmax(100px, auto);
 }
 
+
 .teamPic {
   display: block;
   max-width: 70%;
   margin: 3em auto;
+}
+
+.buttonBar {
+  text-align: center;
+  margin-bottom: 3em;
+
 }
