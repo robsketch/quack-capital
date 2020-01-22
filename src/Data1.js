@@ -29,12 +29,12 @@ const BasicTable = (props) => {
     let HDB = props.dataHDB[k]
     var tick = row.t;
     var trend = '';
-    if (tick === 0) {
-      trend = <FontAwesomeIcon icon={faMinusCircle} />;
-    } else if (tick === 1) {
-      trend = <FontAwesomeIcon icon={faArrowCircleUp} color="green" />;
+    if (tick === 1) {
+      trend = <FontAwesomeIcon icon={faArrowCircleUp} color="green"/>;
+    } else if (tick === -1) {
+      trend = <FontAwesomeIcon icon={faArrowCircleDown} color="red" />;
     } else {
-      trend = <FontAwesomeIcon icon={faArrowCircleDown} color="red" />
+      trend = <FontAwesomeIcon icon={faMinusCircle}/>
     };
     
     return (
@@ -71,7 +71,7 @@ class Data1 extends Component {
     // Define url, kdb params and http params
     const url = 'https://localhost:8090/executeQuery'
     const kdbParams = {
-      query: 'update rnk:rank neg size from update t:?[price>price1;-1;?[price=price1;0;1]] from (select Open:first price, High:max price, Low:min price, last price except last price, last price, sum size by sym from trade where time.date=.z.d)',
+      query: 'update rnk:rank neg size from update t:?[price>price1;-1;?[price<price1;1;0]] from (select Open:first price, High:max price, Low:min price, last price except last price, last price, sum size by sym from trade where time.date=.z.d)',
       response: true,
       type: 'sync'
     }
@@ -122,7 +122,7 @@ class Data1 extends Component {
 
   // Ensure data is loaded
   componentDidMount() {
-    this.interval = setInterval(() => this.getData(), 5000)
+    this.interval = setInterval(() => this.getData(), 2000)
     this.getDataHDB()
   }
 

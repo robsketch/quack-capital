@@ -198,7 +198,6 @@ class RealTimePrice extends React.Component {
     }
 
     async getData() {
-        var symChoice = '`AAPL`AIG'
         // Define url, kdb params and http params
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {
@@ -256,7 +255,7 @@ class RealTimePrice extends React.Component {
     }
 
     render() {
-        console.log(this.state.checkedSyms)
+        // console.log(this.state.checkedSyms)
         return (
             <>
                 {/* {this.state.availableSyms.map(x => this.buttonSym(x))} */}
