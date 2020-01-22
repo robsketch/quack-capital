@@ -255,7 +255,7 @@ class RealTimePrice extends React.Component {
     }
 
     render() {
-        console.log(this.state.checkedSyms)
+        // console.log(this.state.checkedSyms)
         return (
             <>
                 {/* {this.state.availableSyms.map(x => this.buttonSym(x))} */}

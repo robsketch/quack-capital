@@ -123,18 +123,18 @@ class Volatility extends React.Component {
         // Fetch data from server
         const response2 = await fetch(url, httpParams2)
         const queryData2 = await response2.json()
-        console.log('HDB Query Result')
-        console.log(queryData2)
+        // console.log('HDB Query Result')
+        // console.log(queryData2)
 
-        console.log('RDB Query Result')
-        console.log(queryData)
+        // console.log('RDB Query Result')
+        // console.log(queryData)
 
         for (let i = 0; i < queryData.result.length; i++) {
             queryData.result[i].data.y[0] = queryData2.result[i].data.y[0].concat(queryData.result[i].data.y[0])
             queryData.result[i].data.y[1] = queryData2.result[i].data.y[1].concat(queryData.result[i].data.y[1])
         }
-        console.log('ConcatTest')
-        console.log(queryData)
+        // console.log('ConcatTest')
+        // console.log(queryData)
 
         // Make an array of the dates that will be plotted on the x-axis.
         var dates = []

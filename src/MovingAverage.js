@@ -115,14 +115,14 @@ class MovingAverage extends React.Component {
         const response = await fetch(url, httpParams)
         const queryData = await response.json()
 
-        console.log('queryData')
-        console.log(queryData)
+        // console.log('queryData')
+        // console.log(queryData)
 
         var dates = []
         let rawDates = queryData.result[0].data.y[0]
 
-        console.log('rawDates')
-        console.log(rawDates)
+        // console.log('rawDates')
+        // console.log(rawDates)
 
         for (let i = 0; i < rawDates.length; i++) {
             dates.push(new Date(rawDates[i]))
