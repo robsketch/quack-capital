@@ -1,16 +1,11 @@
 import React from 'react'
-import Image from 'react-image-resizer'
 import './index.css'
-import Matt from './matt.jpg';
-import Rob from './rob.png'
-import Eoin from './eoin.jpg'
-import Phil from './phil.jpg'
-import Andy from './andrew.jpg'
 import TheTeam from './theteam.jpg'
 
 function Team() {
     return (
         <>
+        <br/>
         <h1>The Team</h1>
         <div className="team">
         <div class="member">
@@ -34,7 +29,7 @@ function Team() {
                 <p>Literally did nothing</p>
             </div>
         </div>
-        <img src={TheTeam} className="teamPic" />
+        <img src={TheTeam} className="teamPic" alt=""/>
         </>
     );
 }

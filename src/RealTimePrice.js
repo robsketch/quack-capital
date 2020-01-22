@@ -198,7 +198,6 @@ class RealTimePrice extends React.Component {
     }
 
     async getData() {
-        var symChoice = '`AAPL`AIG'
         // Define url, kdb params and http params
         const url = 'https://localhost:8090/executeQuery'
         const kdbParams = {

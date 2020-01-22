@@ -129,9 +129,6 @@ class PriceChartFinal extends React.Component {
                         },
                     },
                 },
-                legend: {
-                    show: false
-                }
             },
 
             
