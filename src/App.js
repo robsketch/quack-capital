@@ -13,6 +13,11 @@ class App extends Component {
     characters: [],
   }
 
+  playAudio() {
+    var audio = document.getElementById("audioClick");
+    audio.play();
+  }
+
 
   removeCharacter = index => {
     const { characters } = this.state
@@ -35,10 +40,15 @@ class App extends Component {
     //console.log(new Date("2020.01.09D15:10:13.563597000"))
 
     return (
+    
+
+
+
       <div className="container">
+        <audio id="audioClick" src="duck.wav" ></audio>
         <div className="top-bar">
           <div className="inner-container2">
-            <img src={LogoLeft} alt="duck" class="duck-logo-left" />
+            <img src={LogoLeft} alt="duck" class="duck-logo-left" onClick={this.playAudio} />
             <h1 className="duck-title">Quack Capital</h1>
             <img src={LogoRight} alt="duck" class="duck-logo-right" />
             <h1 className="duck-title"> </h1>
