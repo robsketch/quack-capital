@@ -862,6 +862,15 @@ caption {
   animation: rotation 5s infinite linear;
 }
 
+.duck-logo-right:hover {
+  animation: rotation 0.5s infinite linear;
+}
+
+
+.duck-logo-left:hover {
+  animation: rotation 0.5s infinite linear;
+}
+
 .duck-logo-right {
   display: inline;
   height: 2.3em;
@@ -929,7 +938,8 @@ caption {
 
 .teamPic {
   display: block;
-  max-width: 70%;
+  /* max-width: 70%; */
+  min-width: 100%;
   margin: 3em auto;
 }
 

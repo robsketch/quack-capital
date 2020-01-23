@@ -4,7 +4,7 @@ import { faArrowCircleUp, faArrowCircleDown, faMinusCircle } from '@fortawesome/
 
 
 const TableHeader = (props) => {
-  const header = props.headers.map((h, i) => { return <th key={i}>{h}</th> })
+  const header = props.headers.map((h, i) => { return <th key={i} onClick={alert}>{h}</th> })
   return <thead><tr>{header}</tr></thead>
 }
 
@@ -18,6 +18,7 @@ const SumHeader = (props) => {
   })
   return <h2>Daily Statistics - Today's highest traded sym is {maxtraded}</h2>
 }
+
 
 
 // Parse query contents into table
@@ -40,8 +41,7 @@ const BasicTable = (props) => {
     return (
       <tr key={i}>
         <td>{row.sym}</td>
-        <td>{(row.price1).toFixed(2)}</td> { /* min price */}
-        <td>{trend}</td>
+        <td>{trend} {(row.price1).toFixed(2)}</td>
         <td>{(row.size)}</td>
         <td>{(HDB.Close).toFixed(2)}</td>
         <td>{(row.Open).toFixed(2)}</td>
@@ -134,7 +134,7 @@ class Data1 extends Component {
 
     const data = this.state.data
     const dataHDB = this.state.dataHDB
-    const headers = ['Stock', 'Price', 'Trend', 'Volume', 'Previous Close', 'Open', 'High', 'Low']
+    const headers = ['Stock', 'Price', 'Volume', 'Previous Close', 'Open', 'High', 'Low']
 
     return (
       <div>
@@ -142,6 +142,7 @@ class Data1 extends Component {
         <table>
           <TableHeader headers={headers} />
           <BasicTable data={data} dataHDB={dataHDB}/>
+          {console.log('dataaaa')}{console.log(this.state)}
         </table>
       </div>
     )
