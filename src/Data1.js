@@ -122,7 +122,7 @@ class Data1 extends Component {
 
   // Ensure data is loaded
   componentDidMount() {
-    this.interval = setInterval(() => this.getData(), 2000)
+    this.interval = setInterval(() => this.getData(), 5000)
     this.getDataHDB()
   }
 
