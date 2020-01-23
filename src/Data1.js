@@ -142,7 +142,7 @@ class Data1 extends Component {
         <table>
           <TableHeader headers={headers} />
           <BasicTable data={data} dataHDB={dataHDB}/>
-          {console.log('dataaaa')}{console.log(this.state)}
+          {/* {console.log('dataaaa')}{console.log(this.state)} */}
         </table>
       </div>
     )
